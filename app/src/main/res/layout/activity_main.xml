@@ -67,7 +67,8 @@
             app:icon="@drawable/settings_icon"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/mid_padding"
-            app:iconTint="@color/black" />
+            app:iconTint="@color/black"
+            android:id="@+id/settingsButton"/>
 
     </LinearLayout>
 </LinearLayout>

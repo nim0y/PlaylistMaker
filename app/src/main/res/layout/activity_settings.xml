@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="vertical"
         android:padding="12dp">
 
@@ -21,11 +21,12 @@
                 android:layout_width="@dimen/button_w"
                 android:layout_height="@dimen/button_h"
                 android:layout_gravity="center"
-                android:background=""
-                android:contentDescription="@android:string/no"
+                android:backgroundTint="@color/black"
+                style="?android:attr/borderlessButtonStyle"
                 app:icon="@drawable/back_arrow"
                 app:iconGravity="textStart"
-                app:iconTint="@color/black" />
+                app:iconTint="@color/black"
+                android:id="@+id/bButton"/>
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -67,8 +68,9 @@
                 android:layout_width="@dimen/button_w"
                 android:layout_height="@dimen/button_h"
                 android:layout_gravity="end"
-                android:background=""
                 android:contentDescription="@android:string/no"
+                android:backgroundTint="@color/white"
+                style="?android:attr/borderlessButtonStyle"
                 app:icon="@drawable/share_gray"
                 app:iconGravity="end"
                 app:iconTint="@color/black" />
@@ -90,7 +92,8 @@
                 android:layout_width="@dimen/button_w"
                 android:layout_height="@dimen/button_w"
                 android:layout_gravity="end"
-                android:background=""
+                android:backgroundTint="@color/white"
+                style="?android:attr/borderlessButtonStyle"
                 app:icon="@drawable/support"
                 app:iconGravity="end"
                 app:iconTint="@color/black"
@@ -113,7 +116,8 @@
                 android:layout_width="@dimen/button_w"
                 android:layout_height="@dimen/button_h"
                 android:layout_gravity="end"
-                android:background=""
+                android:backgroundTint="@color/white"
+                style="?android:attr/borderlessButtonStyle"
                 app:icon="@drawable/arrow_forward"
                 app:iconTint="@color/black"
                 android:contentDescription="@android:string/no"/>

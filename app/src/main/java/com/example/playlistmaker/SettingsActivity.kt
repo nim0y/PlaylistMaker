@@ -1,10 +1,8 @@
 package com.example.playlistmaker
 
-
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -12,9 +10,9 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_settings)
-        val bButton=findViewById<Button>(R.id.bButton)
-            bButton.setOnClickListener {
-                finish()
-            }
+        val backButton = findViewById<Button>(R.id.back)
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 }

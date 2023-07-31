@@ -1,7 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<resources>
+    <!-- dark application theme. -->
+    <style name="PlaylistMakerTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/background_main_dark</item>
+        <item name="colorPrimaryDark">@color/background_main_dark</item>
+        <item name="colorAccent">@color/background_main_dark</item>
+        <item name="background">@color/background_main_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--     Our app's background changes to black when dark mode is activated -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <!--     text and button color change to white to contrast with the app's background-->
     </style>
 </resources>

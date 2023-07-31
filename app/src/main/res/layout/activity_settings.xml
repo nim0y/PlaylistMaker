@@ -2,10 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="12dp"
+    style="@style/settingsbackground"
     tools:context=".SettingsActivity">
 
     <LinearLayout
@@ -16,18 +13,13 @@
 
         <Button
             android:id="@+id/buttonBack"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/button_w"
-            android:layout_height="@dimen/button_h"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/black"
-            app:icon="@drawable/back_arrow"
-            app:iconGravity="textStart"
-            app:iconTint="@color/black" />
+            style="@style/backbutton"
+            app:icon="@drawable/back_arrow" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity=""
             android:padding="6dp"
             android:text="@string/settings"
             android:textAppearance="@style/main" />
@@ -36,13 +28,7 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchcompat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dark_theme_switch"
-        android:textAppearance="@style/origin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="@style/switchstyle" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -50,22 +36,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:text="@string/share_app"
-            android:textAppearance="@style/origin" />
+            style="@style/origin.settings"
+            android:text="@string/share_app" />
 
         <Button
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/button_w"
-            android:layout_height="@dimen/button_h"
+            android:id="@+id/shareButton"
+            style="@style/settingsbuttonstyle"
             android:layout_gravity="end"
-            android:backgroundTint="@color/white"
             android:contentDescription="@android:string/no"
-            app:icon="@drawable/share_gray"
-            app:iconGravity="end"
-            app:iconTint="@color/yandex_gray" />
+            app:icon="@drawable/share_gray" />
     </FrameLayout>
 
     <FrameLayout
@@ -74,22 +53,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:text="@string/call_support"
-            android:textAppearance="@style/origin" />
+            style="@style/origin.settings"
+            android:text="@string/call_support" />
 
         <Button
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/button_w"
-            android:layout_height="@dimen/button_w"
+            android:id="@+id/supportButton"
+            style="@style/settingsbuttonstyle"
             android:layout_gravity="end"
-            android:backgroundTint="@color/white"
             android:contentDescription="@android:string/no"
-            app:icon="@drawable/support"
-            app:iconGravity="end"
-            app:iconTint="@color/yandex_gray" />
+            app:icon="@drawable/support" />
     </FrameLayout>
 
     <FrameLayout
@@ -98,20 +70,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:text="@string/user_agree"
-            android:textAppearance="@style/origin" />
+            style="@style/origin.settings"
+            android:text="@string/user_agree" />
 
         <Button
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/button_w"
-            android:layout_height="@dimen/button_h"
-            android:layout_gravity="end"
-            android:backgroundTint="@color/white"
+            android:id="@+id/termsOfUseButton"
+            style="@style/settingsbuttonstyle"
             android:contentDescription="@android:string/no"
-            app:icon="@drawable/arrow_forward"
-            app:iconTint="@color/yandex_gray" />
+            app:icon="@drawable/arrow_forward" />
     </FrameLayout>
 </LinearLayout>

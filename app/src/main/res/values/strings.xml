@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Playlist Maker</string>
     <string name="search">Поиск</string>
@@ -7,5 +8,10 @@
     <string name="share_app">Поделиться преложением</string>
     <string name="call_support">Позвонить в поддержку</string>
     <string name="user_agree">Пользовательское соглашение</string>
+    <string name="share_button_url" translatable="false">https://practicum.yandex.ru/android-developer/?from=catalog</string>
+    <string name="support_mail_subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="support_mail_text">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="dev_email" translatable="false">nim0y33@gmail.com</string>
+    <string name="offer_yandex" translatable="false">https://yandex.ru/legal/practicum_offer/</string>
 
 </resources>

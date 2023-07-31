@@ -5,7 +5,7 @@
     <style name="origin">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/white</item>
     </style>
     <style name="search_queue">
         <item name="android:textSize">16sp</item>
@@ -16,7 +16,7 @@
     <style name="main">
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="origin.settings">
@@ -27,12 +27,12 @@
 
     </style>
 
-    <style name="mainbuttonstyle" parent="Widget.MaterialComponents.Button.UnelevatedButton" >
+    <style name="mainbuttonstyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:backgroundTint">?attr/colorOnPrimary</item>
+        <item name="android:backgroundTint">@color/white</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textAllCaps">false</item>
         <item name="iconGravity">textStart</item>
@@ -49,29 +49,34 @@
         <item name="android:layout_width">@dimen/button_w</item>
         <item name="android:layout_height">@dimen/button_h</item>
         <item name="android:layout_gravity">end</item>
-        <item name="android:backgroundTint">?attr/colorOnPrimary</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="iconTint">@color/yandex_gray</item>
+        <item name="android:backgroundTint">@color/background_main_dark</item>
+        <item name="android:textColor">@color/white</item>
         <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/white</item>
     </style>
 
     <style name="backbutton" parent="settingsbuttonstyle">
+        <item name="iconTint">@color/white</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="iconGravity">textStart</item>
         <item name="iconSize">24dp</item>
-        <item name="iconTint">@color/black</item>
+
+
+
     </style>
+
     <style name="switchstyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/dark_theme_switch</item>
         <item name="android:textAppearance">@style/origin</item>
-        <item name="trackTint">@color/yandex_gray</item>
-        <item name="thumbTint">@color/yandex_light_gray</item>
+
+        <item name="trackTint">#0F3C97</item>
+        <item name="thumbTint">@color/background_main</item>
     </style>
 
     <style name="mainbackground">
-        <item name="android:background">@color/background_main</item>
+        <item name="android:background">@color/background_main_dark</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
@@ -79,7 +84,7 @@
     </style>
 
     <style name="settingsbackground">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/background_main_dark</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>

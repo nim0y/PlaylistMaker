@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
     <string name="search">Search</string>
     <string name="mediateka">Mediateka</string>
@@ -7,5 +7,6 @@
     <string name="share_app">Share app</string>
     <string name="call_support">Call support</string>
     <string name="user_agree">User agrement</string>
-    <string name="title_hello">Hello, Practicum</string>
+    <string name="support_mail_subject">Message to developers of Playlist Maker</string>
+    <string name="support_mail_text">Thanks to developers for this coll app!</string>
 </resources>

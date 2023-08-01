@@ -13,7 +13,7 @@ import android.widget.ImageView
 
 class SearchActivity : AppCompatActivity() {
     companion object {
-        const val SEARCH_QUERY_HISTORY = "SEARCH_QUERY_HISTORY"
+       private const val SEARCH_QUERY_HISTORY = "SEARCH_QUERY_HISTORY"
     }
 
     private var currentSearchQuery = ""

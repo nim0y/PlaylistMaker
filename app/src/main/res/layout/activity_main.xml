@@ -21,6 +21,10 @@
         <Button
             android:id="@+id/buttonSearch"
             style="@style/mainbuttonstyle"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
             android:layout_marginTop="24dp"
             android:text="@string/search"
             app:icon="@drawable/light_mode" />
@@ -28,12 +32,20 @@
         <Button
             android:id="@+id/buttonMedia"
             style="@style/mainbuttonstyle"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/top_margin"
             android:text="@string/mediateka"
             app:icon="@drawable/media_icon" />
 
         <Button
             android:id="@+id/buttonSettings"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
             style="@style/mainbuttonstyle"
             android:layout_marginTop="@dimen/top_margin"
             android:text="@string/settings"

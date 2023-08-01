@@ -1,10 +1,12 @@
 package com.example.playlistmaker
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,6 +15,7 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         const val SEARCH_QUERY_HISTORY = "SEARCH_QUERY_HISTORY"
     }
+
     private var currentSearchQuery = ""
     private lateinit var searchQueryText: EditText
 
@@ -21,6 +24,7 @@ class SearchActivity : AppCompatActivity() {
         outState.putString(SEARCH_QUERY_HISTORY, currentSearchQuery)
 
     }
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         searchQueryText.setText(savedInstanceState.getString(SEARCH_QUERY_HISTORY))
@@ -29,7 +33,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        searchQueryText= findViewById(R.id.edit_query)
+        searchQueryText = findViewById(R.id.edit_query)
 
         val backButton = findViewById<Button>(R.id.buttonBackSearch)
         backButton.setOnClickListener {
@@ -39,6 +43,9 @@ class SearchActivity : AppCompatActivity() {
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         clearButton.setOnClickListener {
             searchQueryText.text.clear()
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(searchQueryText.windowToken, 0)
             searchQueryText.clearFocus()
         }
 
@@ -58,6 +65,7 @@ class SearchActivity : AppCompatActivity() {
         searchQueryText.addTextChangedListener(textWatcher)
 
     }
+
     fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.INVISIBLE

@@ -6,7 +6,7 @@
     <string name="settings">Настройки</string>
     <string name="dark_theme_switch">Темная тема</string>
     <string name="share_app">Поделиться преложением</string>
-    <string name="call_support">Позвонить в поддержку</string>
+    <string name="mail_support">Написать в поддержку</string>
     <string name="user_agree">Пользовательское соглашение</string>
     <string name="share_button_url" translatable="false">https://practicum.yandex.ru/android-developer/?from=catalog</string>
     <string name="support_mail_subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>

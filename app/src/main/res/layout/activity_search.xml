@@ -14,12 +14,15 @@
         <Button
             android:id="@+id/buttonBackSearch"
             style="@style/backbutton"
+            android:gravity="start|center_vertical"
+            android:layout_width="@dimen/button_w"
+            android:layout_height="@dimen/button_h"
             app:icon="@drawable/back_arrow" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity=""
+            android:gravity="start|center_vertical"
             android:padding="6dp"
             android:text="@string/search"
             android:textAppearance="@style/main" />

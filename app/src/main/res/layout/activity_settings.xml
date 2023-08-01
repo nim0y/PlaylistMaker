@@ -14,12 +14,15 @@
         <Button
             android:id="@+id/buttonBack"
             style="@style/backbutton"
+            android:gravity="start|center_vertical"
+            android:layout_width="@dimen/button_w"
+            android:layout_height="@dimen/button_h"
             app:icon="@drawable/back_arrow" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity=""
+            android:gravity="start|center_vertical"
             android:padding="6dp"
             android:text="@string/settings"
             android:textAppearance="@style/main" />
@@ -28,7 +31,9 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchcompat"
-        style="@style/switchstyle" />
+        style="@style/switchstyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -42,6 +47,8 @@
         <Button
             android:id="@+id/shareButton"
             style="@style/settingsbuttonstyle"
+            android:layout_width="@dimen/button_w"
+            android:layout_height="@dimen/button_h"
             android:layout_gravity="end"
             android:contentDescription="@android:string/no"
             app:icon="@drawable/share_gray" />
@@ -54,11 +61,13 @@
 
         <TextView
             style="@style/origin.settings"
-            android:text="@string/call_support" />
+            android:text="@string/mail_support" />
 
         <Button
             android:id="@+id/supportButton"
             style="@style/settingsbuttonstyle"
+            android:layout_width="@dimen/button_w"
+            android:layout_height="@dimen/button_h"
             android:layout_gravity="end"
             android:contentDescription="@android:string/no"
             app:icon="@drawable/support" />
@@ -76,6 +85,9 @@
         <Button
             android:id="@+id/termsOfUseButton"
             style="@style/settingsbuttonstyle"
+            android:layout_width="@dimen/button_w"
+            android:layout_height="@dimen/button_h"
+            android:layout_gravity="end"
             android:contentDescription="@android:string/no"
             app:icon="@drawable/arrow_forward" />
     </FrameLayout>

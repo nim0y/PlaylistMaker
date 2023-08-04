@@ -36,11 +36,12 @@ class SearchActivity : AppCompatActivity() {
         searchQueryText = findViewById(R.id.edit_query)
 
         val backButton = findViewById<Button>(R.id.buttonBackSearch)
+        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+
         backButton.setOnClickListener {
             finish()
         }
 
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
         clearButton.setOnClickListener {
             searchQueryText.text.clear()
             val inputMethodManager =
@@ -52,18 +53,14 @@ class SearchActivity : AppCompatActivity() {
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
                 Unit
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
                 currentSearchQuery = searchQueryText.text.toString()
             }
-
-
             override fun afterTextChanged(s: Editable?) = Unit
         }
 
         searchQueryText.addTextChangedListener(textWatcher)
-
     }
 
     fun clearButtonVisibility(s: CharSequence?): Int {
@@ -73,7 +70,6 @@ class SearchActivity : AppCompatActivity() {
             View.VISIBLE
         }
     }
-
 }
 
 

@@ -14,19 +14,22 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         val switchcompat = findViewById<SwitchCompat>(R.id.switchcompat)
+        val backButton = findViewById<Button>(R.id.buttonBack)
+        val sharingButton = findViewById<Button>(R.id.shareButton)
+        val supportButton = findViewById<Button>(R.id.supportButton)
 
-        switchcompat.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchcompat.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
-        val backButton = findViewById<Button>(R.id.buttonBack)
+
         backButton.setOnClickListener {
             finish()
         }
-        val sharingButton = findViewById<Button>(R.id.shareButton)
+
         sharingButton.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -36,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
         }
-        val supportButton = findViewById<Button>(R.id.supportButton)
+
         supportButton.setOnClickListener {
             val subject = getString(R.string.support_mail_subject)
             val text = getString(R.string.support_mail_text)

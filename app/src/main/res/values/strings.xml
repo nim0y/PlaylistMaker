@@ -13,5 +13,9 @@
     <string name="support_mail_text">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="dev_email" translatable="false">nim0y33@gmail.com</string>
     <string name="offer_yandex" translatable="false">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="share_button_description" translatable="false">Share</string>
+    <string name="support_button_description" translatable="false">Support</string>
+    <string name="termsOfUse_button_description" translatable="false">TermsOfUse</string>
+    <string name="back_button_description" translatable="false">Back</string>
 
 </resources>

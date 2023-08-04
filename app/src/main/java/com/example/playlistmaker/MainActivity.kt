@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,25 +12,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val searchButton = findViewById<Button>(R.id.buttonSearch)
+        val mediaButton = findViewById<Button>(R.id.buttonMedia)
+        val settingsButton = findViewById<Button>(R.id.buttonSettings)
 
         searchButton.setOnClickListener {
             val searchIntent = Intent(this, SearchActivity::class.java)
             startActivity(searchIntent)
         }
 
-        val mediaButton = findViewById<Button>(R.id.buttonMedia)
-
         mediaButton.setOnClickListener {
             val mediaIntent = Intent(this, MediatekaActivity::class.java)
             startActivity(mediaIntent)
         }
 
-        val settingsButton = findViewById<Button>(R.id.buttonSettings)
-
         settingsButton.setOnClickListener {
             val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
         }
-
     }
 }

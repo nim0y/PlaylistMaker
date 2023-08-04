@@ -17,6 +17,7 @@
             android:gravity="start|center_vertical"
             android:layout_width="@dimen/button_w"
             android:layout_height="@dimen/button_h"
+            android:contentDescription="@string/back_button_description"
             app:icon="@drawable/back_arrow" />
 
         <TextView
@@ -50,7 +51,7 @@
             android:layout_width="@dimen/button_w"
             android:layout_height="@dimen/button_h"
             android:layout_gravity="end"
-            android:contentDescription="@android:string/no"
+            android:contentDescription="@string/share_button_description"
             app:icon="@drawable/share_gray" />
     </FrameLayout>
 
@@ -69,7 +70,7 @@
             android:layout_width="@dimen/button_w"
             android:layout_height="@dimen/button_h"
             android:layout_gravity="end"
-            android:contentDescription="@android:string/no"
+            android:contentDescription="@string/support_button_description"
             app:icon="@drawable/support" />
     </FrameLayout>
 
@@ -88,7 +89,7 @@
             android:layout_width="@dimen/button_w"
             android:layout_height="@dimen/button_h"
             android:layout_gravity="end"
-            android:contentDescription="@android:string/no"
+            android:contentDescription="@string/termsOfUse_button_description"
             app:icon="@drawable/arrow_forward" />
     </FrameLayout>
 </LinearLayout>

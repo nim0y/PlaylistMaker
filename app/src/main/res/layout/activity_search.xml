@@ -16,9 +16,11 @@
             style="@style/backbutton"
             android:layout_width="@dimen/button_w"
             android:layout_height="@dimen/button_h"
+            android:layout_marginEnd="24dp"
             android:contentDescription="@string/back_button_description"
             android:gravity="start|center_vertical"
-            app:icon="@drawable/back_arrow" />
+            app:icon="@drawable/back_arrow"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -66,6 +68,13 @@
             android:visibility="invisible"
             app:iconTint="@color/black" />
     </FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/track_recycler_view"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_margin"
+        />
 
 
 </LinearLayout>

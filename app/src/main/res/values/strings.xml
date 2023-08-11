@@ -17,5 +17,6 @@
     <string name="support_button_description" translatable="false">Support</string>
     <string name="termsOfUse_button_description" translatable="false">TermsOfUse</string>
     <string name="back_button_description" translatable="false">Back</string>
+    <string name="track_dot" translatable="false">•</string>
 
 </resources>

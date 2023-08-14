@@ -18,7 +18,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private var currentSearchQuery = ""
-    private lateinit var searchQueryText: EditText
+    private  var searchQueryText: EditText? = null
     private var tracks = ArrayList<Track>(
         listOf(
             Track(
@@ -62,7 +62,7 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        searchQueryText.setText(savedInstanceState.getString(SEARCH_QUERY_HISTORY))
+        searchQueryText?.setText(savedInstanceState.getString(SEARCH_QUERY_HISTORY))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,11 +82,11 @@ class SearchActivity : AppCompatActivity() {
         }
 
         clearButton.setOnClickListener {
-            searchQueryText.text.clear()
+            searchQueryText?.text?.clear()
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(searchQueryText.windowToken, 0)
-            searchQueryText.clearFocus()
+            inputMethodManager?.hideSoftInputFromWindow(searchQueryText?.windowToken, 0)
+            searchQueryText?.clearFocus()
         }
 
         val textWatcher = object : TextWatcher {
@@ -95,13 +95,13 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
-                currentSearchQuery = searchQueryText.text.toString()
+                currentSearchQuery = searchQueryText?.text.toString()
             }
 
             override fun afterTextChanged(s: Editable?) = Unit
         }
 
-        searchQueryText.addTextChangedListener(textWatcher)
+        searchQueryText?.addTextChangedListener(textWatcher)
     }
 
     fun clearButtonVisibility(s: CharSequence?): Int {

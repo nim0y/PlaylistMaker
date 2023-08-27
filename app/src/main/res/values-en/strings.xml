@@ -5,8 +5,11 @@
     <string name="settings">Settings</string>
     <string name="dark_theme_switch">Dark theme</string>
     <string name="share_app">Share app</string>
-    <string name="mail_support">Mall support</string>
+    <string name="mail_support">Mail support</string>
     <string name="user_agree">User agrement</string>
     <string name="support_mail_subject">Message to developers of Playlist Maker</string>
     <string name="support_mail_text">Thanks to developers for this coll app!</string>
+    <string name="no_connection_text">Connection problem\n\nDownload failed.Check internet connection.</string>
+    <string name="search_refresh_button">Refresh</string>
+    <string name="nothing_found_case">Nothing found</string>
 </resources>

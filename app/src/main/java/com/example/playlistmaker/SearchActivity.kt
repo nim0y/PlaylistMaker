@@ -89,17 +89,6 @@ class SearchActivity : AppCompatActivity() {
                                 tracksList.clear()
                                 if (response.body()?.results?.isNotEmpty() == true) {
                                     tracksList.addAll(response.body()?.results!!)
-                                    //
-                                    //
-                                    // Миша убери тосты не забудь!
-                                    //
-                                    //
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Типа сработали",
-                                        Toast.LENGTH_LONG
-                                    )
-                                        .show()
                                 } else {
                                     tracksList.clear()
                                     nothingFoundCase.visibility = View.VISIBLE
@@ -111,12 +100,9 @@ class SearchActivity : AppCompatActivity() {
                             adapter.notifyDataSetChanged()
                         }
 
-
                         override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
                             tracksList.clear()
                             errorNoConnection.visibility = View.VISIBLE
-                            Toast.makeText(applicationContext, "Нет соединения", Toast.LENGTH_LONG)
-                                .show()
                         }
                     })
             }
@@ -171,8 +157,3 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 }
-
-
-
-
-

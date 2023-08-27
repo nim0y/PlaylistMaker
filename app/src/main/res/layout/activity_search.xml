@@ -19,8 +19,7 @@
             android:layout_marginEnd="24dp"
             android:contentDescription="@string/back_button_description"
             android:gravity="start|center_vertical"
-            app:icon="@drawable/back_arrow"
-            />
+            app:icon="@drawable/back_arrow" />
 
         <TextView
             android:layout_width="match_parent"
@@ -65,17 +64,74 @@
             android:contentDescription="@android:string/cancel"
             android:padding="@dimen/mid_padding"
             android:src="@drawable/search_close_ic"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:iconTint="@color/black" />
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/nothing_found_case_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/layout_error_margin_top"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/nothing_found_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            style="@style/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            android:text="@string/nothing_found_case" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_connection_error_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/layout_error_margin_top"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/no_connection_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            style="@style/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            android:gravity="center"
+            android:text="@string/no_connection_text" />
+
+        <Button
+            android:id="@+id/search_refresh_button"
+            style="@style/refresh_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/top_margin_button_search"
+            app:cornerRadius="@dimen/button_refresh_corner_radius" />
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/track_recycler_view"
-        tools:listitem="@layout/view_track"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_margin"
-        />
+        tools:listitem="@layout/view_track" />
 
 
 </LinearLayout>

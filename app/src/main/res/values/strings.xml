@@ -18,5 +18,8 @@
     <string name="termsOfUse_button_description" translatable="false">TermsOfUse</string>
     <string name="back_button_description" translatable="false">Back</string>
     <string name="track_dot" translatable="false">•</string>
+    <string name="no_connection_text">Проблемы со связью\n\n Загрузка не удалась.Проверьте подключение к интернету</string>
+    <string name="search_refresh_button">Обновить</string>
+    <string name="nothing_found_case">Ничего не нашлось</string>
 
 </resources>

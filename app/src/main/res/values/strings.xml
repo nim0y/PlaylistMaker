@@ -21,5 +21,8 @@
     <string name="no_connection_text">Проблемы со связью\n\n Загрузка не удалась.Проверьте подключение к интернету</string>
     <string name="search_refresh_button">Обновить</string>
     <string name="nothing_found_case">Ничего не нашлось</string>
+    <string name="you_search">Вы искали</string>
+    <string name="history_clean">Очистить историю</string>
+    <string name="shared_pref_id" translatable="false">some_id</string>
 
 </resources>

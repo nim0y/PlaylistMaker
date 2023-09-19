@@ -10,8 +10,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val sPref = getSharedPreferences(D_T_ON, MODE_PRIVATE)
-        switchOn = sPref.getBoolean(S_P_STAT, false)
+        val sPref = getSharedPreferences(APP_THEME_SHARED_PREFERENCES, MODE_PRIVATE)
+        switchOn = sPref.getBoolean(IS_DARK_APP_THEME_KEY, false)
         themeToggle(switchOn)
     }
 

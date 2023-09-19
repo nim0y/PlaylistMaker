@@ -5,6 +5,7 @@ import com.google.gson.Gson
 
 
 const val PREF_KEY = "pref_key"
+const val MAX_TEMP_LIST_SIZE = 10
 
 class SearchHistory(
     sharedPreferences: SharedPreferences
@@ -22,8 +23,8 @@ class SearchHistory(
         var tempList = read().toMutableList()
         tempList.removeIf { it.trackId == newTrack.trackId }
         tempList.add(0, newTrack)
-        if (tempList.size > 10) {
-            tempList = tempList.subList(0, 10)
+        if (tempList.size > MAX_TEMP_LIST_SIZE) {
+            tempList = tempList.subList(0, MAX_TEMP_LIST_SIZE)
         }
         val json = Gson().toJson(tempList)
         sharedPref.edit()

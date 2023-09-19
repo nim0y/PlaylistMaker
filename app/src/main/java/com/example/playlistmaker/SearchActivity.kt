@@ -1,12 +1,14 @@
 package com.example.playlistmaker
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -14,7 +16,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,7 +49,6 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var adapter: TrackAdapter
     private lateinit var searchAdapter: TrackAdapter
 
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SEARCH_QUERY_HISTORY, currentSearchQuery)
@@ -80,7 +80,8 @@ class SearchActivity : AppCompatActivity() {
 
         searchHistoryClass = SearchHistory(sharedPreferencesHistory!!)
 
-        adapter = TrackAdapter(tracksList) { trackList ->
+        adapter = TrackAdapter(tracksList)
+        { trackList ->
             searchHistoryClass.add(trackList)
         }
 
@@ -89,7 +90,6 @@ class SearchActivity : AppCompatActivity() {
         searchAdapter = TrackAdapter(searchHistoryList) {
         }
         searchHistoryRecyclerView?.adapter = searchAdapter
-
 
         fun sendToServer() {
             trackRecyclerView.visibility = View.VISIBLE
@@ -132,14 +132,14 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-
         clearButton.setOnClickListener {
             searchQueryText?.text?.clear()
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(searchQueryText?.windowToken, 0)
-            trackRecyclerView.visibility = View.GONE
+            Log.d(TAG, "Clear button + $searchHistoryList")
             searchQueryText?.clearFocus()
+            trackRecyclerView.visibility = View.GONE
         }
 
         val textWatcher = object : TextWatcher {
@@ -158,16 +158,13 @@ class SearchActivity : AppCompatActivity() {
         searchQueryText?.addTextChangedListener(textWatcher)
 
         searchQueryText?.setOnFocusChangeListener { _, hasFocus ->
-            searchHistoryList.addAll(searchHistoryClass.read())
+            readHistory()
             trackRecyclerView.visibility = View.GONE
-            searchAdapter.notifyDataSetChanged()
             if (searchHistoryList.isNotEmpty()) {
                 searchHistoryLayout?.visibility =
                     if (hasFocus && searchQueryText?.text.isNullOrEmpty()) View.VISIBLE
                     else View.GONE
-                searchAdapter.notifyDataSetChanged()
             }
-
         }
 
         searchQueryText?.setOnEditorActionListener { _, actionId, _ ->
@@ -186,13 +183,7 @@ class SearchActivity : AppCompatActivity() {
             searchAdapter.notifyDataSetChanged()
             searchHistoryLayout?.visibility = View.GONE
         }
-        @SuppressLint("NotifyDataSetChanged")
-        fun readHistory() {
-            searchHistoryList.addAll(searchHistoryClass.read())
-            searchAdapter.notifyDataSetChanged()
-        }
     }
-
 
     fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
@@ -200,6 +191,15 @@ class SearchActivity : AppCompatActivity() {
         } else {
             View.VISIBLE
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun readHistory() {
+        searchHistoryList.clear()
+        searchHistoryList.addAll(searchHistoryClass.read())
+        searchAdapter.notifyDataSetChanged()
+
+        Log.d(TAG, "readHistory + $searchHistoryList")
     }
 
     fun searchHistoryLayoutVisibility(s: CharSequence?): Int {

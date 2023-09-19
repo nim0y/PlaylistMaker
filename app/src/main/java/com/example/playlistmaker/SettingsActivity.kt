@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 
-const val D_T_ON = "dark_theme_on"
-const val S_P_STAT = "shared_preferences_status"
+const val APP_THEME_SHARED_PREFERENCES = "dark_theme_on"
+const val IS_DARK_APP_THEME_KEY = "shared_preferences_status"
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -27,9 +26,9 @@ class SettingsActivity : AppCompatActivity() {
         switchcompat.setOnCheckedChangeListener { _, isChecked ->
             (applicationContext as App).themeToggle(isChecked)
 
-            val sPref = getSharedPreferences(D_T_ON, MODE_PRIVATE)
+            val sPref = getSharedPreferences(APP_THEME_SHARED_PREFERENCES, MODE_PRIVATE)
             sPref.edit()
-                .putBoolean(S_P_STAT, isChecked)
+                .putBoolean(IS_DARK_APP_THEME_KEY, isChecked)
                 .apply()
         }
 

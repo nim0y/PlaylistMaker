@@ -1,11 +1,12 @@
 package com.example.playlistmaker
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class TrackAdapter(
-    private val tracksList: List<Track>,
+    private var tracksList: List<Track>,
     private var itemClickListener: (Track) -> Unit
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
@@ -23,6 +24,7 @@ class TrackAdapter(
         holder.bind(tracksList[position])
         holder.itemView.setOnClickListener {
             itemClickListener.invoke(tracksList[position])
+            Log.e("myLog", "Track push $position")
         }
     }
 }

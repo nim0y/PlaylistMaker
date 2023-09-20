@@ -1,10 +1,8 @@
 package com.example.playlistmaker
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -80,14 +79,15 @@ class SearchActivity : AppCompatActivity() {
 
         searchHistoryClass = SearchHistory(sharedPreferencesHistory!!)
 
-        adapter = TrackAdapter(tracksList)
-        { trackList ->
+        adapter = TrackAdapter(tracksList) { trackList ->
             searchHistoryClass.add(trackList)
         }
 
         trackRecyclerView.adapter = adapter
 
-        searchAdapter = TrackAdapter(searchHistoryList) {
+        searchAdapter = TrackAdapter(searchHistoryList) { searchHistoryList ->
+            searchHistoryClass.add(searchHistoryList)
+            searchAdapter.notifyItemRangeChanged(0, 10)
         }
         searchHistoryRecyclerView?.adapter = searchAdapter
 
@@ -137,7 +137,7 @@ class SearchActivity : AppCompatActivity() {
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(searchQueryText?.windowToken, 0)
-            Log.d(TAG, "Clear button + $searchHistoryList")
+            Log.e("myLog", "Clear button + $searchHistoryList")
             searchQueryText?.clearFocus()
             trackRecyclerView.visibility = View.GONE
         }
@@ -160,11 +160,9 @@ class SearchActivity : AppCompatActivity() {
         searchQueryText?.setOnFocusChangeListener { _, hasFocus ->
             readHistory()
             trackRecyclerView.visibility = View.GONE
-            if (searchHistoryList.isNotEmpty()) {
-                searchHistoryLayout?.visibility =
-                    if (hasFocus && searchQueryText?.text.isNullOrEmpty()) View.VISIBLE
-                    else View.GONE
-            }
+            if (searchHistoryList.isNotEmpty() && hasFocus && searchQueryText?.text.isNullOrEmpty()) {
+                searchHistoryLayout?.visibility = View.VISIBLE
+            } else View.GONE
         }
 
         searchQueryText?.setOnEditorActionListener { _, actionId, _ ->
@@ -180,7 +178,7 @@ class SearchActivity : AppCompatActivity() {
         clearHistoryButton.setOnClickListener {
             searchHistoryClass.clear()
             searchHistoryList.clear()
-            searchAdapter.notifyDataSetChanged()
+            searchAdapter.notifyItemRangeChanged(0, 10)
             searchHistoryLayout?.visibility = View.GONE
         }
     }
@@ -197,9 +195,9 @@ class SearchActivity : AppCompatActivity() {
     fun readHistory() {
         searchHistoryList.clear()
         searchHistoryList.addAll(searchHistoryClass.read())
-        searchAdapter.notifyDataSetChanged()
+        searchAdapter.notifyItemRangeChanged(0, 10)
 
-        Log.d(TAG, "readHistory + $searchHistoryList")
+        Log.e("myLog", "readHistory + $searchHistoryList")
     }
 
     fun searchHistoryLayoutVisibility(s: CharSequence?): Int {

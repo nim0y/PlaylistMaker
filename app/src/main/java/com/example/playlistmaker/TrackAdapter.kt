@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class TrackAdapter(
-    private var tracksList: List<Track>,
-    private var itemClickListener: (Track) -> Unit
+    private val tracksList: List<Track>,
+    private val itemClickListener: (Track) -> Unit
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -22,6 +22,7 @@ class TrackAdapter(
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(tracksList[position])
+        holder.setIsRecyclable(true)
         holder.itemView.setOnClickListener {
             itemClickListener.invoke(tracksList[position])
             Log.e("myLog", "Track push $position")

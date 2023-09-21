@@ -12,9 +12,9 @@ class SearchHistory(
 ) {
 
     private val sharedPref = sharedPreferences
-    fun read(): Array<Track> {
-        val json = sharedPref.getString(PREF_KEY, null) ?: return emptyArray()
-        return Gson().fromJson(json, Array<Track>::class.java)
+    fun read(): List<Track> {
+        val json = sharedPref.getString(PREF_KEY, null) ?: return emptyList()
+        return Gson().fromJson(json, Array<Track>::class.java).toList()
     }
 
     fun clear() = sharedPref.edit().clear().apply()

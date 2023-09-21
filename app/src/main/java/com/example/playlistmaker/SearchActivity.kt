@@ -44,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchHistoryClass: SearchHistory
 
     private val tracksList = ArrayList<Track>()
-    private val searchHistoryList = ArrayList<Track>()
+    private var searchHistoryList = ArrayList<Track>()
     private lateinit var adapter: TrackAdapter
     private lateinit var searchAdapter: TrackAdapter
 
@@ -75,6 +75,7 @@ class SearchActivity : AppCompatActivity() {
         val backButton = findViewById<Button>(R.id.buttonBackSearch)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
+
         sharedPreferencesHistory = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
 
         searchHistoryClass = SearchHistory(sharedPreferencesHistory!!)
@@ -87,6 +88,7 @@ class SearchActivity : AppCompatActivity() {
 
         searchAdapter = TrackAdapter(searchHistoryList) { searchHistoryList ->
             searchHistoryClass.add(searchHistoryList)
+            readHistory()
             searchAdapter.notifyItemRangeChanged(0, 10)
         }
         searchHistoryRecyclerView?.adapter = searchAdapter
@@ -138,10 +140,10 @@ class SearchActivity : AppCompatActivity() {
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(searchQueryText?.windowToken, 0)
             Log.e("myLog", "Clear button + $searchHistoryList")
+            searchAdapter.notifyDataSetChanged()
             searchQueryText?.clearFocus()
             trackRecyclerView.visibility = View.GONE
         }
-
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
                 Unit
@@ -167,7 +169,11 @@ class SearchActivity : AppCompatActivity() {
 
         searchQueryText?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                sendToServer()
+                if (searchQueryText?.text?.isNotEmpty() == true) {
+                    sendToServer()
+                } else {
+                    readHistory()
+                }
             }
             false
         }
@@ -178,7 +184,7 @@ class SearchActivity : AppCompatActivity() {
         clearHistoryButton.setOnClickListener {
             searchHistoryClass.clear()
             searchHistoryList.clear()
-            searchAdapter.notifyItemRangeChanged(0, 10)
+            searchAdapter.notifyItemRangeChanged(0, searchHistoryList.size)
             searchHistoryLayout?.visibility = View.GONE
         }
     }
@@ -195,8 +201,7 @@ class SearchActivity : AppCompatActivity() {
     fun readHistory() {
         searchHistoryList.clear()
         searchHistoryList.addAll(searchHistoryClass.read())
-        searchAdapter.notifyItemRangeChanged(0, 10)
-
+        searchAdapter.notifyItemRangeChanged(0, searchHistoryList.size)
         Log.e("myLog", "readHistory + $searchHistoryList")
     }
 

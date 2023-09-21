@@ -92,6 +92,8 @@ class SearchActivity : AppCompatActivity() {
             searchAdapter.notifyItemRangeChanged(0, 10)
         }
         searchHistoryRecyclerView?.adapter = searchAdapter
+        readHistory()
+        historyVisible()
 
         fun sendToServer() {
             trackRecyclerView.visibility = View.VISIBLE
@@ -142,6 +144,7 @@ class SearchActivity : AppCompatActivity() {
             Log.e("myLog", "Clear button + $searchHistoryList")
             searchAdapter.notifyDataSetChanged()
             searchQueryText?.clearFocus()
+            historyVisible()
             trackRecyclerView.visibility = View.GONE
         }
         val textWatcher = object : TextWatcher {
@@ -203,6 +206,12 @@ class SearchActivity : AppCompatActivity() {
         searchHistoryList.addAll(searchHistoryClass.read())
         searchAdapter.notifyItemRangeChanged(0, searchHistoryList.size)
         Log.e("myLog", "readHistory + $searchHistoryList")
+    }
+
+    private fun historyVisible() {
+        if (searchHistoryList.isNotEmpty()) {
+            searchHistoryLayout?.visibility = View.VISIBLE
+        } else View.GONE
     }
 
     fun searchHistoryLayoutVisibility(s: CharSequence?): Int {

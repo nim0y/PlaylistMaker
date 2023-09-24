@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+
+const val APP_THEME_SHARED_PREFERENCES = "dark_theme_on"
+const val IS_DARK_APP_THEME_KEY = "shared_preferences_status"
 
 class SettingsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -18,12 +21,15 @@ class SettingsActivity : AppCompatActivity() {
         val sharingButton = findViewById<Button>(R.id.shareButton)
         val supportButton = findViewById<Button>(R.id.supportButton)
 
+        switchcompat.isChecked = (applicationContext as App).switchOn
+
         switchcompat.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+            (applicationContext as App).themeToggle(isChecked)
+
+            val sPref = getSharedPreferences(APP_THEME_SHARED_PREFERENCES, MODE_PRIVATE)
+            sPref.edit()
+                .putBoolean(IS_DARK_APP_THEME_KEY, isChecked)
+                .apply()
         }
 
         backButton.setOnClickListener {
@@ -58,3 +64,4 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 }
+

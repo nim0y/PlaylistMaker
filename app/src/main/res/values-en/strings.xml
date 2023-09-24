@@ -12,4 +12,6 @@
     <string name="no_connection_text">Connection problem\n\nDownload failed.Check internet connection.</string>
     <string name="search_refresh_button">Refresh</string>
     <string name="nothing_found_case">Nothing found</string>
+    <string name="you_search">You searched</string>
+    <string name="history_clean">Clear history</string>
 </resources>

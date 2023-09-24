@@ -125,13 +125,50 @@
             app:cornerRadius="@dimen/button_refresh_corner_radius" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/search_history_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_margin_button_search"
+        android:orientation="vertical"
+        android:visibility="gone">
 
+    <TextView
+        style="@style/main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/track_padding"
+        android:text="@string/you_search"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_history_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="8"
+        android:layout_weight="1"
+        tools:listitem="@layout/view_track" />
+
+    <Button
+        android:id="@+id/history_clear_button"
+        style="@style/refresh_button_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_margin"
+        android:text="@string/history_clean"
+        app:cornerRadius="@dimen/button_refresh_corner_radius" />
+
+
+
+</LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/track_recycler_view"
         android:layout_width="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_margin"
         tools:listitem="@layout/view_track" />
-
-
 </LinearLayout>

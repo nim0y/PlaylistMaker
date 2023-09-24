@@ -83,6 +83,7 @@
 
     <style name="switchstyle">
         <item name="android:text">@string/dark_theme_switch</item>
+        <item name="android:checked">true</item>
         <item name="android:textAppearance">@style/origin</item>
         <item name="trackTint">@color/yp_blue_light</item>
         <item name="thumbTint">@color/background_main</item>

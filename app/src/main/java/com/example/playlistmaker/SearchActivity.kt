@@ -112,10 +112,8 @@ class SearchActivity : AppCompatActivity() {
                         ) {
                             if (response.code() == 200) {
                                 tracksList.clear()
-
                                 if (response.body()?.results?.isNotEmpty() == true) {
                                     tracksList.addAll(response.body()?.results!!)
-                                    Log.e("myLog", "$response")
                                 } else {
                                     tracksList.clear()
                                     nothingFoundCase.visibility = View.VISIBLE

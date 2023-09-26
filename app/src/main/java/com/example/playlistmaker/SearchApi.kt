@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface SearchApi {
-    @GET("/search?entity=song") //&country=ru - что бы поменять страну поиска
+    @GET("/search?entity=song")
     fun trackSearch(@Query("term") text: String): Call<TrackResponse>
 }

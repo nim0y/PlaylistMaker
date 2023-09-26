@@ -11,9 +11,8 @@ const val CURRENT_TRACK = "current_track"
 
 class TrackAdapter(
     private val tracksList: List<Track>,
-    private var itemClickListener: (Track) -> Unit
+    private val itemClickListener: (Track) -> Unit
 ) : RecyclerView.Adapter<TrackViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_track, parent, false)

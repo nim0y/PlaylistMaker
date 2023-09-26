@@ -1,17 +1,14 @@
 package com.example.playlistmaker
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 
-
 class AudioPlayerActivity : AppCompatActivity() {
-    private var playerTime: TextView? = null
+    private lateinit var playerTime: TextView
     private lateinit var track: Track
     private var audioPlayerHolder: AudioPlayerHolder? = null
 
@@ -27,7 +24,6 @@ class AudioPlayerActivity : AppCompatActivity() {
         audioPlayerHolder = AudioPlayerHolder(this)
 
         track = getTrack(intent.getStringExtra(CURRENT_TRACK))
-        Log.e("myLog", "$track")
 
         audioPlayerHolder!!.bind(track)
 
@@ -36,17 +32,15 @@ class AudioPlayerActivity : AppCompatActivity() {
         }
 
         playPause.setOnClickListener {
-            Toast.makeText(this, "Кнопка Play нажата", Toast.LENGTH_SHORT).show()
+            playPause.setImageResource(R.drawable.ic_play_button_clicked)
         }
 
         likeButton.setOnClickListener {
-            Toast.makeText(this, "${track.trackName} добавлена в favorite", Toast.LENGTH_SHORT)
-                .show()
+            likeButton.setImageResource(R.drawable.ic_like_button_clicked)
         }
 
         addToPlayList.setOnClickListener {
-            Toast.makeText(this, "${track.trackName} Добавлен в Плейлист", Toast.LENGTH_SHORT)
-                .show()
+            addToPlayList.setImageResource(R.drawable.ic_add_button_clicked)
         }
 
     }

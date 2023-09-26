@@ -28,7 +28,14 @@ class AudioPlayerHolder(private val audioPlayerHolder: AudioPlayerActivity) {
         artistName.text = item?.artistName
         trackGenre.text = item?.primaryGenreName
         albumName.text = item?.collectionName
-        trackCountry.text = item?.country
+        trackCountry.text =
+            when (item?.country) {
+                "USA" -> "Соединительные штаты америки"
+                "GBR" -> "Обьединительные королевства"
+                "CAN" -> "Канада"
+                else -> item?.country
+            }
+
         playerTime.text = PLAYER_TIME_TEMP
         trackLenght.text =
             SimpleDateFormat("mm:ss", Locale.getDefault()).format(item?.trackTimeMillis)

@@ -14,4 +14,9 @@
     <string name="nothing_found_case">Nothing found</string>
     <string name="you_search">You searched</string>
     <string name="history_clean">Clear history</string>
+    <string name="ap_country">Country</string>
+    <string name="ap_genre">Genre</string>
+    <string name="ap_year">Year</string>
+    <string name="ap_album">Album</string>
+    <string name="ap_duration">Duration</string>
 </resources>

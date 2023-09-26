@@ -9,9 +9,16 @@
     <dimen name="top_margin">16dp</dimen>
     <dimen name="layout_error_margin_top">102dp</dimen>
     <dimen name="top_margin_button_search">24dp</dimen>
+    <dimen name="ap_margin_mid">24dp</dimen>
     <dimen name="button_w">48dp</dimen>
     <dimen name="button_h">48dp</dimen>
     <dimen name="cornerRadius">16dp</dimen>
     <dimen name="cover_image_w">45dp</dimen>
     <dimen name="cover_image_h">45dp</dimen>
+    <dimen name="ap_placeholder_top">26dp</dimen>
+    <dimen name="ap_margin_12">12dp</dimen>
+    <dimen name="ap_margin_28">28dp</dimen>
+    <dimen name="ap_margin_30">30dp</dimen>
+    <dimen name="ap_text_padding">8dp</dimen>
+    <dimen name="ap_text_size_13">13sp</dimen>
 </resources>

@@ -4,10 +4,12 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/background_main_dark</item>
         <item name="colorPrimaryDark">@color/background_main_dark</item>
+        <item name="colorOnPrimary">@color/black</item>
         <item name="colorAccent">@color/background_main_dark</item>
         <item name="background">@color/background_main_dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!--     Our app's background changes to black when dark mode is activated -->
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/black</item>

@@ -8,8 +8,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.text.SimpleDateFormat
 import java.util.Locale
-const val CORNER_RADIOUS = 10
-class TrackViewHolder(trackView: View) : RecyclerView.ViewHolder(trackView) {
+
+const val CORNER_RADIUS = 10
+
+class TrackViewHolder(trackView: View, val itemClickListener: (Track) -> Unit) :
+    RecyclerView.ViewHolder(trackView) {
     private val trackCover = trackView.findViewById<ImageView>(R.id.ic_disc_cover)
     private val trackName = trackView.findViewById<TextView>(R.id.track_name_text_view)
     private val artistName = trackView.findViewById<TextView>(R.id.artist_name_text_view)
@@ -20,12 +23,15 @@ class TrackViewHolder(trackView: View) : RecyclerView.ViewHolder(trackView) {
         artistName.text = item.artistName
         trackLenght.text =
             SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
+        itemView.setOnClickListener {
+            itemClickListener(item)
+        }
 
         Glide.with(itemView.context)
             .load(item.artworkUrl100)
             .placeholder(R.drawable.ic_placeholder)
             .fitCenter()
-            .transform(RoundedCorners(CORNER_RADIOUS))
+            .transform(RoundedCorners(CORNER_RADIUS))
             .into(trackCover)
     }
 }

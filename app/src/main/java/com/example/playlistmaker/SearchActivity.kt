@@ -26,6 +26,7 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         private const val SEARCH_QUERY_HISTORY = "SEARCH_QUERY_HISTORY"
         const val PREF_NAME = "pref_name"
+
     }
 
     private val iTunesBaseUrl = "https://itunes.apple.com"
@@ -44,7 +45,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchHistoryClass: SearchHistory
 
     private val tracksList = ArrayList<Track>()
-    private var searchHistoryList = ArrayList<Track>()
+    private val searchHistoryList = ArrayList<Track>()
     private lateinit var adapter: TrackAdapter
     private lateinit var searchAdapter: TrackAdapter
 
@@ -111,8 +112,10 @@ class SearchActivity : AppCompatActivity() {
                         ) {
                             if (response.code() == 200) {
                                 tracksList.clear()
+
                                 if (response.body()?.results?.isNotEmpty() == true) {
                                     tracksList.addAll(response.body()?.results!!)
+                                    Log.e("myLog", "$response")
                                 } else {
                                     tracksList.clear()
                                     nothingFoundCase.visibility = View.VISIBLE
@@ -221,4 +224,5 @@ class SearchActivity : AppCompatActivity() {
             View.GONE
         }
     }
+
 }

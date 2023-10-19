@@ -19,4 +19,5 @@
     <string name="ap_year">Year</string>
     <string name="ap_album">Album</string>
     <string name="ap_duration">Duration</string>
+    <string name="def_time">00:00</string>
 </resources>

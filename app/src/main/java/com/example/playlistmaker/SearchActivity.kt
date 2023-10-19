@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,8 +16,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.data.Track
+import com.example.playlistmaker.databinding.ActivitySearchBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,9 +30,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SearchActivity : AppCompatActivity() {
     companion object {
         private const val SEARCH_QUERY_HISTORY = "SEARCH_QUERY_HISTORY"
+        private const val DEBOUNCE_DELAY = 2000L
         const val PREF_NAME = "pref_name"
-
     }
+
+    private var binding: ActivitySearchBinding? = null
+
+    private val handler = Handler(Looper.getMainLooper())
 
     private val iTunesBaseUrl = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
@@ -63,11 +72,14 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_search)
         searchHistoryLayout = findViewById(R.id.search_history_layout)
         searchHistoryRecyclerView = findViewById(R.id.search_history_recycle_view)
         searchQueryText = findViewById(R.id.edit_query)
         trackRecyclerView = findViewById(R.id.track_recycler_view)
+
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar_1)
 
         val clearHistoryButton = findViewById<Button>(R.id.history_clear_button)
         val errorNoConnection = findViewById<LinearLayout>(R.id.no_connection_error_layout)
@@ -75,7 +87,6 @@ class SearchActivity : AppCompatActivity() {
         val searchRefreshButton = findViewById<Button>(R.id.search_refresh_button)
         val backButton = findViewById<Button>(R.id.buttonBackSearch)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-
 
         sharedPreferencesHistory = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
 
@@ -97,11 +108,13 @@ class SearchActivity : AppCompatActivity() {
         historyVisible()
 
         fun sendToServer() {
-            trackRecyclerView.visibility = View.VISIBLE
-            nothingFoundCase.visibility = View.GONE
-            errorNoConnection.visibility = View.GONE
-            searchHistoryLayout?.visibility = View.GONE
             if (searchQueryText?.text?.isNotEmpty()!!) {
+                progressBar.visibility = View.VISIBLE
+                nothingFoundCase.visibility = View.GONE
+                errorNoConnection.visibility = View.GONE
+                searchHistoryLayout?.visibility = View.GONE
+                trackRecyclerView.visibility = View.GONE
+
                 iTunesService.trackSearch(searchQueryText?.text.toString())
                     .enqueue(object : Callback<TrackResponse> {
 
@@ -110,10 +123,13 @@ class SearchActivity : AppCompatActivity() {
                             call: Call<TrackResponse>,
                             response: Response<TrackResponse>
                         ) {
+                            progressBar.visibility = View.GONE
                             if (response.code() == 200) {
                                 tracksList.clear()
                                 if (response.body()?.results?.isNotEmpty() == true) {
                                     tracksList.addAll(response.body()?.results!!)
+                                    trackRecyclerView.visibility = View.VISIBLE
+                                    adapter.notifyDataSetChanged()
                                 } else {
                                     tracksList.clear()
                                     nothingFoundCase.visibility = View.VISIBLE
@@ -127,10 +143,17 @@ class SearchActivity : AppCompatActivity() {
 
                         override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
                             tracksList.clear()
+                            progressBar.visibility = View.GONE
                             errorNoConnection.visibility = View.VISIBLE
                         }
                     })
             }
+        }
+
+        val searchRunnable = Runnable { sendToServer() }
+        fun searchDebounce() {
+            handler.removeCallbacks(searchRunnable)
+            handler.postDelayed(searchRunnable, DEBOUNCE_DELAY)
         }
 
         backButton.setOnClickListener {
@@ -153,6 +176,7 @@ class SearchActivity : AppCompatActivity() {
                 Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchDebounce()
                 clearButton.visibility = clearButtonVisibility(s)
                 currentSearchQuery = searchQueryText?.text.toString()
                 searchHistoryLayout?.visibility = searchHistoryLayoutVisibility(s)

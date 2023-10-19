@@ -4,13 +4,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.data.Track
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 const val AP_ROUNDED_CORNERS = 15
-const val PLAYER_TIME_TEMP = "00:01"
+const val PLAYER_TIME_TEMP = "00:00"
 
 class AudioPlayerHolder(private val audioPlayerHolder: AudioPlayerActivity) {
     private val trackCover = audioPlayerHolder.findViewById<ImageView>(R.id.ic_player_disc_cover)
@@ -28,14 +29,7 @@ class AudioPlayerHolder(private val audioPlayerHolder: AudioPlayerActivity) {
         artistName.text = item?.artistName
         trackGenre.text = item?.primaryGenreName
         albumName.text = item?.collectionName
-        trackCountry.text =
-            when (item?.country) {
-                "USA" -> "Соединительные штаты америки"
-                "GBR" -> "Обьединительные королевства"
-                "CAN" -> "Канада"
-                else -> item?.country
-            }
-
+        trackCountry.text = item?.country
         playerTime.text = PLAYER_TIME_TEMP
         trackLenght.text =
             SimpleDateFormat("mm:ss", Locale.getDefault()).format(item?.trackTimeMillis)

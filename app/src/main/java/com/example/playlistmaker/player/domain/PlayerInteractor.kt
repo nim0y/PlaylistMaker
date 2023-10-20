@@ -1,6 +1,6 @@
 package com.example.playlistmaker.player.domain
 
-class PlayerUseCaseInter(private val player: Player) {
+class PlayerInteractor(private val player: Player) {
 
     fun preparePlayer(previewUrl: String) {
         player.preparePlayer(previewUrl)

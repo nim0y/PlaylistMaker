@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.data.Track
+import com.example.playlistmaker.player.domain.models.Track
 import com.google.gson.Gson
 
 const val CURRENT_TRACK = "current_track"

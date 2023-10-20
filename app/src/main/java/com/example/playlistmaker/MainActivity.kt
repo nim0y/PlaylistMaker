@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding?.root)
 
         binding?.buttonSearch?.setOnClickListener {
             val searchIntent = Intent(this, SearchActivity::class.java)

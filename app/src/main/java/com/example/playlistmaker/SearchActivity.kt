@@ -19,8 +19,8 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.data.Track
 import com.example.playlistmaker.databinding.ActivitySearchBinding
+import com.example.playlistmaker.player.domain.models.Track
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -108,7 +108,7 @@ class SearchActivity : AppCompatActivity() {
         historyVisible()
 
         fun sendToServer() {
-            if (searchQueryText?.text?.isNotEmpty()!!) {
+            if (searchQueryText?.text?.isNotEmpty() == true) {
                 progressBar.visibility = View.VISIBLE
                 nothingFoundCase.visibility = View.GONE
                 errorNoConnection.visibility = View.GONE
@@ -143,6 +143,7 @@ class SearchActivity : AppCompatActivity() {
 
                         override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
                             tracksList.clear()
+                            searchHistoryLayout?.visibility = View.GONE
                             progressBar.visibility = View.GONE
                             errorNoConnection.visibility = View.VISIBLE
                         }
@@ -169,7 +170,6 @@ class SearchActivity : AppCompatActivity() {
             searchAdapter.notifyDataSetChanged()
             searchQueryText?.clearFocus()
             historyVisible()
-            trackRecyclerView.visibility = View.GONE
         }
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
@@ -179,7 +179,11 @@ class SearchActivity : AppCompatActivity() {
                 searchDebounce()
                 clearButton.visibility = clearButtonVisibility(s)
                 currentSearchQuery = searchQueryText?.text.toString()
-                searchHistoryLayout?.visibility = searchHistoryLayoutVisibility(s)
+                if (clearButton.visibility == View.GONE) {
+                    searchHistoryLayout?.visibility = View.GONE
+                } else {
+                    searchHistoryLayout?.visibility = searchHistoryLayoutVisibility(s)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) = Unit
@@ -198,7 +202,7 @@ class SearchActivity : AppCompatActivity() {
         searchQueryText?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (searchQueryText?.text?.isNotEmpty() == true) {
-                    sendToServer()
+                    searchDebounce()
                 } else {
                     readHistory()
                 }

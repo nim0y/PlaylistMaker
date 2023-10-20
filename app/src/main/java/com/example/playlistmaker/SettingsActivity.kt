@@ -16,7 +16,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding?.root)
 
         binding?.switchcompat?.isChecked = (applicationContext as App).switchOn
 

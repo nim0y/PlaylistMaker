@@ -11,7 +11,7 @@ class MediatekaActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         binding = ActivityMediatekaBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding?.root)
 
         binding?.buttonBack?.setOnClickListener {
             finish()

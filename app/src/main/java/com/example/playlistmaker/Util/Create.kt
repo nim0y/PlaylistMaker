@@ -1,10 +1,10 @@
 package com.example.playlistmaker.Util
 
 import com.example.playlistmaker.player.data.impl.PlayerImpl
-import com.example.playlistmaker.player.domain.PlayerUseCaseInter
+import com.example.playlistmaker.player.domain.PlayerInteractor
 
 object Create {
-    fun providePlayer(): PlayerUseCaseInter {
-        return PlayerUseCaseInter(PlayerImpl())
+    fun providePlayer(): PlayerInteractor {
+        return PlayerInteractor(PlayerImpl())
     }
 }

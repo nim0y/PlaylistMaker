@@ -1,9 +1,8 @@
 package com.example.playlistmaker.player.domain.models
 
 enum class PlayerState {
-    DEF_STATE,
-    PREP_STATE,
-    PLAY_STATE,
+    DEFAULT_STATE,
+    PREPARATION_STATE,
+    PLAYING_STATE,
     PAUSE_STATE,
-    COMP_STATE
 }

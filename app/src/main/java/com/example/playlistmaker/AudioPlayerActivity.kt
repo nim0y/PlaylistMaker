@@ -7,9 +7,9 @@ import android.os.Looper
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.Util.Create
-import com.example.playlistmaker.data.Track
 import com.example.playlistmaker.databinding.ActivityAudioPlayerBinding
 import com.example.playlistmaker.player.domain.models.PlayerState
+import com.example.playlistmaker.player.domain.models.Track
 import com.google.gson.Gson
 import kotlinx.coroutines.Runnable
 import java.util.Locale
@@ -18,9 +18,8 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     private var binding: ActivityAudioPlayerBinding? = null
     private var track: Track? = null
-    private var audioPlayerHolder: AudioPlayerHolder? = null
     private var player = Create.providePlayer()
-    private var state = PlayerState.DEF_STATE
+    private var state = PlayerState.DEFAULT_STATE
     private var playerTime: TextView? = null
 
     private val mainThreadHandler = Handler(Looper.getMainLooper())
@@ -29,15 +28,15 @@ class AudioPlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding?.root)
         playerTime = findViewById(R.id.player_time)
 
 
-        audioPlayerHolder = AudioPlayerHolder(this)
+        val audioPlayerHolder = AudioPlayerHolder(this)
 
         track = getTrack(intent.getStringExtra(CURRENT_TRACK))
 
-        audioPlayerHolder!!.bind(track)
+        audioPlayerHolder.bind(track)
 
         setPlayer()
 
@@ -66,12 +65,12 @@ class AudioPlayerActivity : AppCompatActivity() {
         player.preparePlayer(track!!.previewUrl)
         player.prepareAsync()
         player.setOnPreparedListener {
-            state = PlayerState.PREP_STATE
+            state = PlayerState.PREPARATION_STATE
             binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
         }
         player.setOnCompletionListener {
             binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
-            state = PlayerState.PREP_STATE
+            state = PlayerState.PREPARATION_STATE
             binding?.playerTime?.text = getString(R.string.def_time)
             mainThreadHandler.removeCallbacks(timerUpdate())
         }
@@ -79,7 +78,7 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     private fun playControl() {
         when (state) {
-            PlayerState.PLAY_STATE -> {
+            PlayerState.PLAYING_STATE -> {
                 player.pausePlayer()
                 binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
                 state = PlayerState.PAUSE_STATE
@@ -87,14 +86,14 @@ class AudioPlayerActivity : AppCompatActivity() {
 
             }
 
-            PlayerState.PREP_STATE, PlayerState.PAUSE_STATE -> {
+            PlayerState.PREPARATION_STATE, PlayerState.PAUSE_STATE -> {
                 player.startPlayer()
                 binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button_clicked)
-                state = PlayerState.PLAY_STATE
+                state = PlayerState.PLAYING_STATE
                 mainThreadHandler.post(timerUpdate())
             }
 
-            else -> {}
+            else -> Unit
         }
     }
 

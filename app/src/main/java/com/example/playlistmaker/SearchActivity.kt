@@ -203,7 +203,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchQueryText?.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
+            if (actionId == EditorInfo.IME_ACTION_DONE && tracksList.isEmpty()) {
                 if (searchQueryText?.text?.isNotEmpty() == true) {
                     searchDebounce()
                 } else {

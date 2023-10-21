@@ -22,7 +22,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/ap_margin_mid" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonBackPlayer"
         style="@style/backbutton"
         android:layout_width="@dimen/button_w"
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/track_name"
         tools:text="енот потаскун" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/button_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,6 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorOnPrimary"
+        android:clickable="true"
         android:src="@drawable/ic_add_button"
         app:layout_constraintBottom_toBottomOf="@id/button_play"
         app:layout_constraintStart_toEndOf="@id/left_guideline"
@@ -98,6 +99,7 @@
         android:id="@+id/button_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:backgroundTint="?attr/colorOnPrimary"
         android:src="@drawable/ic_like_button"
         app:layout_constraintBottom_toBottomOf="@id/button_play"
@@ -124,10 +126,10 @@
         android:padding="@dimen/ap_text_padding"
         android:text="@string/ap_duration"
         android:textSize="@dimen/ap_text_size_13"
+        app:layout_constraintEnd_toStartOf="@id/track_length_tv"
         app:layout_constraintBottom_toTopOf="@id/track_name_ap"
-        app:layout_constraintEnd_toStartOf="@id/barrier"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toEndOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/player_time"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <TextView
@@ -137,6 +139,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:padding="@dimen/ap_text_padding"
+        app:layout_constraintHorizontal_weight="5"
         app:layout_constraintBaseline_toBaselineOf="@id/track_time"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
         app:layout_constraintStart_toEndOf="@id/barrier"
@@ -150,9 +153,10 @@
         android:padding="@dimen/ap_text_padding"
         android:text="@string/ap_album"
         android:textSize="@dimen/ap_text_size_13"
+        app:layout_constraintEnd_toStartOf="@id/album_name_tv"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintBottom_toTopOf="@id/track_year"
-        app:layout_constraintStart_toEndOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/track_time" />
+        app:layout_constraintStart_toEndOf="@id/left_guideline" />
 
     <TextView
         android:id="@+id/album_name_tv"
@@ -162,9 +166,10 @@
         android:gravity="end"
         android:padding="@dimen/ap_text_padding"
         android:singleLine="true"
+        app:layout_constraintHorizontal_weight="5"
         app:layout_constraintBaseline_toBaselineOf="@id/track_name_ap"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
-        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintStart_toEndOf="@id/track_name_ap"
         tools:text="Jopa bobra" />
 
     <TextView
@@ -174,9 +179,9 @@
         android:padding="@dimen/ap_text_padding"
         android:text="@string/ap_year"
         android:textSize="@dimen/ap_text_size_13"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintBottom_toTopOf="@id/track_genre"
-        app:layout_constraintStart_toEndOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/track_name_ap" />
+        app:layout_constraintStart_toEndOf="@id/left_guideline" />
 
     <TextView
         android:id="@+id/track_year_tv"
@@ -185,9 +190,10 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:padding="@dimen/ap_text_padding"
+        app:layout_constraintHorizontal_weight="5"
         app:layout_constraintBaseline_toBaselineOf="@id/track_year"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
-        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintStart_toEndOf="@id/track_year"
         tools:text="1984" />
 
     <TextView
@@ -197,9 +203,9 @@
         android:padding="@dimen/ap_text_padding"
         android:text="@string/ap_genre"
         android:textSize="@dimen/ap_text_size_13"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintBottom_toTopOf="@id/track_country"
-        app:layout_constraintStart_toEndOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/track_year" />
+        app:layout_constraintStart_toEndOf="@id/left_guideline" />
 
     <TextView
         android:id="@+id/track_genre_tv"
@@ -208,9 +214,10 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:padding="@dimen/ap_text_padding"
+        app:layout_constraintHorizontal_weight="5"
         app:layout_constraintBaseline_toBaselineOf="@id/track_genre"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
-        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintStart_toEndOf="@id/track_genre"
         tools:text="Инди" />
 
     <TextView
@@ -221,9 +228,10 @@
         android:padding="@dimen/ap_text_padding"
         android:text="@string/ap_country"
         android:textSize="@dimen/ap_text_size_13"
+        app:layout_constraintEnd_toStartOf="@id/track_country_tv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/track_genre" />
+        app:layout_constraintHorizontal_weight="3" />
 
     <TextView
         android:id="@+id/track_country_tv"
@@ -234,16 +242,18 @@
         android:gravity="end"
         android:padding="@dimen/ap_text_padding"
         android:singleLine="true"
+        app:layout_constraintHorizontal_weight="5"
         app:layout_constraintBaseline_toBaselineOf="@id/track_country"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
-        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintStart_toEndOf="@id/track_country"
         tools:text="Россия" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
+        android:orientation="horizontal"
+        android:paddingTop="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="track_time" />
+        app:barrierDirection="end" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

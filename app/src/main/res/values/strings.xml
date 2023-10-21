@@ -29,5 +29,6 @@
     <string name="ap_year">Год</string>
     <string name="ap_album">Альбом</string>
     <string name="ap_duration">Длительность</string>
+    <string name="def_time">00:00</string>
 
 </resources>

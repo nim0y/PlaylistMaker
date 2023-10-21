@@ -3,27 +3,24 @@ package com.example.playlistmaker
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmaker.databinding.ActivitySettingsBinding
 
 const val APP_THEME_SHARED_PREFERENCES = "dark_theme_on"
 const val IS_DARK_APP_THEME_KEY = "shared_preferences_status"
 
 class SettingsActivity : AppCompatActivity() {
 
+    private var binding: ActivitySettingsBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
-        val switchcompat = findViewById<SwitchCompat>(R.id.switchcompat)
-        val backButton = findViewById<Button>(R.id.buttonBack)
-        val sharingButton = findViewById<Button>(R.id.shareButton)
-        val supportButton = findViewById<Button>(R.id.supportButton)
+        binding?.switchcompat?.isChecked = (applicationContext as App).switchOn
 
-        switchcompat.isChecked = (applicationContext as App).switchOn
-
-        switchcompat.setOnCheckedChangeListener { _, isChecked ->
+        binding?.switchcompat?.setOnCheckedChangeListener { _, isChecked ->
             (applicationContext as App).themeToggle(isChecked)
 
             val sPref = getSharedPreferences(APP_THEME_SHARED_PREFERENCES, MODE_PRIVATE)
@@ -32,11 +29,11 @@ class SettingsActivity : AppCompatActivity() {
                 .apply()
         }
 
-        backButton.setOnClickListener {
+        binding?.buttonBack?.setOnClickListener {
             finish()
         }
 
-        sharingButton.setOnClickListener {
+        binding?.shareButton?.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.share_button_url))
@@ -46,7 +43,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(shareIntent)
         }
 
-        supportButton.setOnClickListener {
+        binding?.supportButton?.setOnClickListener {
             val subject = getString(R.string.support_mail_subject)
             val text = getString(R.string.support_mail_text)
             val intent = Intent(Intent.ACTION_SENDTO)
@@ -57,11 +54,9 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val termsOfUseButton = findViewById<Button>(R.id.termsOfUseButton)
-        termsOfUseButton.setOnClickListener {
+        binding?.termsOfUseButton?.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.offer_yandex)))
             startActivity(intent)
         }
     }
 }
-

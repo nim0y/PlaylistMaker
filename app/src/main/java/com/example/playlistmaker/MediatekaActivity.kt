@@ -1,18 +1,19 @@
 package com.example.playlistmaker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmaker.databinding.ActivityMediatekaBinding
 
 class MediatekaActivity : AppCompatActivity() {
+
+    private var binding: ActivityMediatekaBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mediateka)
+        binding = ActivityMediatekaBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
-        val backButton = findViewById<Button>(R.id.buttonBack)
-
-        backButton.setOnClickListener {
+        binding?.buttonBack?.setOnClickListener {
             finish()
         }
     }

@@ -179,13 +179,18 @@ class SearchActivity : AppCompatActivity() {
                 searchDebounce()
                 clearButton.visibility = clearButtonVisibility(s)
                 currentSearchQuery = searchQueryText?.text.toString()
-                if (clearButton.visibility == View.GONE) {
-                    searchHistoryLayout?.visibility = View.VISIBLE
+                historyVisible()
+                readHistory()
+                if (clearButton.visibility == View.GONE && searchHistoryList.isNotEmpty()) {
+                    trackRecyclerView.visibility = View.GONE
                     nothingFoundCase.visibility = View.GONE
                     errorNoConnection.visibility = View.GONE
 
+
                 } else {
                     searchHistoryLayout?.visibility = searchHistoryLayoutVisibility(s)
+                    nothingFoundCase.visibility = View.GONE
+                    errorNoConnection.visibility = View.GONE
                 }
             }
 

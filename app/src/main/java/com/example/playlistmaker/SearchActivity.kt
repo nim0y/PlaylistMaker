@@ -79,7 +79,7 @@ class SearchActivity : AppCompatActivity() {
         searchQueryText = findViewById(R.id.edit_query)
         trackRecyclerView = findViewById(R.id.track_recycler_view)
 
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar_1)
+        val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
 
         val clearHistoryButton = findViewById<Button>(R.id.history_clear_button)
         val errorNoConnection = findViewById<LinearLayout>(R.id.no_connection_error_layout)
@@ -180,7 +180,10 @@ class SearchActivity : AppCompatActivity() {
                 clearButton.visibility = clearButtonVisibility(s)
                 currentSearchQuery = searchQueryText?.text.toString()
                 if (clearButton.visibility == View.GONE) {
-                    searchHistoryLayout?.visibility = View.GONE
+                    searchHistoryLayout?.visibility = View.VISIBLE
+                    nothingFoundCase.visibility = View.GONE
+                    errorNoConnection.visibility = View.GONE
+
                 } else {
                     searchHistoryLayout?.visibility = searchHistoryLayoutVisibility(s)
                 }

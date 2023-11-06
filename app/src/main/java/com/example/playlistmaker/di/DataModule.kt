@@ -2,6 +2,7 @@ package com.example.playlistmaker.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import com.example.playlistmaker.data.NetworkClient
 import com.example.playlistmaker.data.impl.search.HistoryRepositoryImpl
 import com.example.playlistmaker.data.impl.settings.SettingsRepositoryImpl
@@ -29,6 +30,10 @@ val dataModule = module {
     }
 
     single { Gson() }
+
+    single {
+        MediaPlayer()
+    }
 
     single<NetworkClient> {
         RetrofitNetworkClient(get(), get())

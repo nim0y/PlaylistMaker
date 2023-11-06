@@ -17,7 +17,7 @@ val repositoryModule = module {
         SearchRepositoryImpl(get())
     }
     factory<PlayerRepository> {
-        PlayerRepositoryImpl(get())
+        PlayerRepositoryImpl()
     }
     single<HistoryRepository> {
         HistoryRepositoryImpl(get(), get())

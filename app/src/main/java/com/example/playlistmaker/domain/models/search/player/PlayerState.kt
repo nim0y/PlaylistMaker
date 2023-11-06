@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.models.search
+package com.example.playlistmaker.domain.models.search.player
 
 enum class PlayerState {
     DEFAULT_STATE,

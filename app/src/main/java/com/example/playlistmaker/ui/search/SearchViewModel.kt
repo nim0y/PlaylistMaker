@@ -1,17 +1,15 @@
 package com.example.playlistmaker.ui.search
 
-import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmaker.data.dto.Constants.DEBOUNCE_DELAY
 import com.example.playlistmaker.domain.api.search.HistoryInteractor
 import com.example.playlistmaker.domain.api.search.SearchInteractor
 import com.example.playlistmaker.domain.models.search.Track
-
+import com.example.playlistmaker.utils.DEBOUNCE_DELAY
 
 class SearchViewModel(
     private val searchInteractor: SearchInteractor,
@@ -24,33 +22,37 @@ class SearchViewModel(
     val historyState: LiveData<List<Track>> = _historyState
 
     private val handler = Handler(Looper.getMainLooper())
+    private var searchRunnable: Runnable? = null
+    private var lastQuery: String? = null
+
+    init {
+        setState(State.SomeHistory(historyInteractor.read()))
+    }
 
     private fun setState(state: State) {
         _searchState.postValue(state)
     }
 
-    init {
-        Log.e("myLog", "------${_searchState.value}")
-        setState(State.SomeHistory(historyInteractor.read()))
-    }
-
-    fun searchDebounce(queryNew: String) {
+    fun queryDebounce(queryNew: String?) {
         lastQuery = queryNew
-        when (lastQuery) {
-            queryNew.isNullOrBlank().toString() ->
-                setState(State.SomeHistory(historyInteractor.read()))
-
-            else -> {
-
-                val searchRunnable = Runnable { sendToServer(queryNew) }
-                handler.removeCallbacks(searchRunnable)
-                handler.postAtTime(searchRunnable, TOKEN, DEBOUNCE_DELAY)
-            }
-
+        if (queryNew.isNullOrEmpty()) {
+            setState(State.SomeHistory(historyInteractor.read()))
+        } else {
+            setState(State.Load)
+            searchDebounce { searchRequest(queryNew) }
         }
     }
 
-    private var lastQuery: String? = null
+    private fun searchDebounce(request: () -> Unit) {
+        searchRunnable = Runnable { request() }
+        handler.removeCallbacksAndMessages(TOKEN)
+        val time = SystemClock.uptimeMillis() + DEBOUNCE_DELAY
+        handler.postAtTime(searchRunnable!!, TOKEN, time)
+    }
+
+    fun onDestroyHandlerRemove() {
+        handler.removeCallbacksAndMessages(Any())
+    }
 
     fun addTrackToHistory(track: Track) {
         historyInteractor.add(track)
@@ -58,66 +60,49 @@ class SearchViewModel(
     }
 
     private fun historyModification() {
-        Log.e("myLog", "------${_searchState.value}")
         setState(State.SomeHistory(historyInteractor.read()))
     }
 
     override fun onCleared() {
         super.onCleared()
-        handler.removeCallbacksAndMessages(TOKEN)
+        handler.removeCallbacksAndMessages(searchRunnable)
     }
 
-    fun clearSearchHistory() {
+    fun toClearSearchHistory() {
         historyInteractor.clear()
         historyModification()
     }
 
-    fun some(queryNew: String) {
-        if (queryNew.isNullOrBlank()) {
-            Log.e("myLog", "Jopa")
+    private fun searchRequest(queryNew: String) {
+        if (lastQuery!!.isBlank()) {
             setState(State.SomeHistory(historyInteractor.read()))
-        }
-        if (queryNew.isNotEmpty()) {
-            setState(State.Load)
-            searchDebounce(queryNew)
-        }
-    }
+        } else {
+            searchInteractor.searchTracks(
+                queryNew, object : SearchInteractor.TrackConsumer {
+                    override fun consume(found: List<Track>?, errorId: String?) {
+                        handler.post {
+                            when {
+                                errorId != null -> {
+                                    setState(State.Error)
+                                }
 
-    @SuppressLint
-    fun sendToServer(queryNew: String) {
-        Log.e("myLog", "Search request-----$queryNew")
-        searchInteractor.searchTracks(
-            queryNew, object : SearchInteractor.TrackConsumer {
-                override fun consume(found: List<Track>?, errorId: String?) {
-                    val tempList = mutableListOf<Track>()
-                    handler.post {
-                        if (found != null) {
-                            tempList.clear()
-                            tempList.addAll(found)
+                                found.isNullOrEmpty() -> {
+                                    setState(State.NothingFound())
+                                }
+
+                                else -> {
+                                    setState(State.SomeData(found))
+                                }
+                            }
+
                         }
-                        when {
-                            errorId != null -> {
-                                setState(State.Error)
-                            }
-
-                            tempList.isEmpty() -> {
-                                setState(State.NothingFound())
-                            }
-
-                            else -> {
-                                Log.e("myLog", "Some Data ${_searchState.value}")
-                                setState(State.SomeData(tempList))
-                            }
-                        }
-
                     }
                 }
-            }
-        )
+            )
+        }
     }
 
     companion object {
-        private val TOKEN = Any()
+        val TOKEN = Any()
     }
 }
-

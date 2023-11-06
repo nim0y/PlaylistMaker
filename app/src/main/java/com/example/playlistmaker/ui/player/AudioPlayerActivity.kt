@@ -2,22 +2,16 @@ package com.example.playlistmaker.ui.player
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.data.dto.Constants.AP_ROUNDED_CORNERS
-import com.example.playlistmaker.data.dto.Constants.PLAYER_TIME_TEMP
-import com.example.playlistmaker.data.dto.Constants.SEARCH_QUERY_HISTORY
-import com.example.playlistmaker.data.impl.player.PlayerRepositoryImpl
 import com.example.playlistmaker.databinding.ActivityAudioPlayerBinding
-import com.example.playlistmaker.domain.models.search.PlayerState
 import com.example.playlistmaker.domain.models.search.Track
-import kotlinx.coroutines.Runnable
+import com.example.playlistmaker.domain.models.search.player.PlayerState
+import com.example.playlistmaker.utils.SEARCH_QUERY_HISTORY
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -25,32 +19,31 @@ import java.util.Locale
 class AudioPlayerActivity : AppCompatActivity() {
 
     private var binding: ActivityAudioPlayerBinding? = null
-    val track by lazy {
-        IntentCompat.getParcelableExtra(
-            intent,
-            SEARCH_QUERY_HISTORY,
-            Track::class.java
-        )
-    }
-    private var player = PlayerRepositoryImpl()
-    private var state = PlayerState.DEFAULT_STATE
-    private var playerTime: TextView? = null
-
-    private val mainThreadHandler = Handler(Looper.getMainLooper())
+    private lateinit var track: Track
+    private val vm by viewModel<AudioPlayerViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        playerTime = findViewById(R.id.player_time)
 
-        showTrack(track!!)
+        track = IntentCompat.getParcelableExtra(intent, SEARCH_QUERY_HISTORY, Track::class.java)!!
 
-        setPlayer()
+        showTrack(track)
+
+        vm.setPlayer(track.previewUrl!!)
+
+        vm.audioPlayerState.observe(this) {
+            execute(it)
+        }
+
+        vm.timer.observe(this) {
+            binding?.playerTime?.text =
+                SimpleDateFormat("mm:ss", Locale.getDefault()).format(it)
+        }
 
         binding?.buttonPlay?.setOnClickListener {
-            playControl()
+            vm.playControl()
         }
         binding?.buttonBackPlayer?.setOnClickListener {
             finish()
@@ -70,7 +63,6 @@ class AudioPlayerActivity : AppCompatActivity() {
                 track.releaseDate,
                 DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
             ).year.toString()
-
         }
 
         binding?.icPlayerDiscCover?.let {
@@ -78,75 +70,36 @@ class AudioPlayerActivity : AppCompatActivity() {
                 .load(track.artworkUrl512)
                 .placeholder(R.drawable.ic_placeholder)
                 .centerCrop()
-                .transform(RoundedCorners(AP_ROUNDED_CORNERS))
+                .transform(RoundedCorners(applicationContext.resources.getDimensionPixelSize(R.dimen.track_corner_radious)))
                 .into(it)
         }
-        playerTime?.text = PLAYER_TIME_TEMP
-
-
     }
 
+    private fun execute(playerState: PlayerState) {
+        when (playerState) {
+            PlayerState.PLAYING_STATE -> setIconPause()
+            PlayerState.PAUSE_STATE -> setIconPlay()
+            PlayerState.PREPARATION_STATE -> setIconPlay()
+            PlayerState.DEFAULT_STATE -> {}
+        }
+    }
 
     override fun onPause() {
-        player.pausePlayer()
+        vm.onPause()
         binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
-        state = PlayerState.PAUSE_STATE
-        mainThreadHandler.removeCallbacks(timerUpdate())
         super.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        player.release()
+        vm.onDestroy()
     }
 
-    private fun setPlayer() {
-        player.preparePlayer(track?.previewUrl)
-        player.prepareAsync()
-        player.setOnPreparedListener {
-            state = PlayerState.PREPARATION_STATE
-            binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
-        }
-        player.setOnCompletionListener {
-            binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
-            state = PlayerState.PREPARATION_STATE
-            binding?.playerTime?.text = getString(R.string.def_time)
-            mainThreadHandler.removeCallbacks(timerUpdate())
-        }
+    private fun setIconPlay() {
+        binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
     }
 
-    private fun playControl() {
-        when (state) {
-            PlayerState.PLAYING_STATE -> {
-                player.pausePlayer()
-                binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
-                state = PlayerState.PAUSE_STATE
-                mainThreadHandler.removeCallbacks(timerUpdate())
-
-            }
-
-            PlayerState.PREPARATION_STATE, PlayerState.PAUSE_STATE -> {
-                player.startPlayer()
-                binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button_clicked)
-                state = PlayerState.PLAYING_STATE
-                mainThreadHandler.post(timerUpdate())
-            }
-
-            else -> Unit
-        }
-    }
-
-    private fun timerUpdate(): Runnable {
-        return object : Runnable {
-            override fun run() {
-                if (player.playerCheck()) {
-                    binding?.playerTime?.text = SimpleDateFormat(
-                        "mm:ss",
-                        Locale.getDefault()
-                    ).format(player.getCurrentPosition())
-                    mainThreadHandler.postDelayed(this, 10L)
-                }
-            }
-        }
+    private fun setIconPause() {
+        binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button_clicked)
     }
 }

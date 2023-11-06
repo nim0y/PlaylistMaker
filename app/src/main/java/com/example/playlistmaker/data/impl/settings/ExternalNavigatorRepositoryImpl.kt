@@ -1,14 +1,14 @@
-package com.example.playlistmaker.domain.implemantation.settings
+package com.example.playlistmaker.data.impl.settings
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.api.settings.ButtonsRepository
+import com.example.playlistmaker.domain.api.settings.ExternalNavigatorRepository
 
-class ButtonsRepositoryImpl(
+class ExternalNavigatorRepositoryImpl(
     private val context: Context
-) : ButtonsRepository {
+) : ExternalNavigatorRepository {
     override fun termsOfUse() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.offer_yandex)))
         context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))

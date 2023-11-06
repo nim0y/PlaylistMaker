@@ -1,6 +1,6 @@
 package com.example.playlistmaker.domain.api.settings
 
-interface ButtonsRepository {
+interface ExternalNavigatorRepository {
     fun termsOfUse()
     fun share()
     fun support()

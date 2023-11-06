@@ -29,7 +29,7 @@ data class Track(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readLong(),
+        parcel.readValue(Long::class.java.classLoader) as? Long,
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -43,7 +43,7 @@ data class Track(
         parcel.writeString(trackId)
         parcel.writeString(trackName)
         parcel.writeString(artistName)
-        trackTimeMillis?.let { parcel.writeLong(it) }
+        parcel.writeValue(trackTimeMillis)
         parcel.writeString(artworkUrl100)
         parcel.writeString(collectionName)
         parcel.writeString(releaseDate)
@@ -65,6 +65,8 @@ data class Track(
             return arrayOfNulls(size)
         }
     }
+
+
 }
 
 

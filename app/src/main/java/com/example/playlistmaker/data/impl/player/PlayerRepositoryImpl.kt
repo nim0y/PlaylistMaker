@@ -2,14 +2,17 @@ package com.example.playlistmaker.data.impl.player
 
 import android.media.MediaPlayer
 import com.example.playlistmaker.domain.api.player.PlayerRepository
+import com.example.playlistmaker.domain.models.search.player.PlayerState
 
 class PlayerRepositoryImpl : PlayerRepository {
 
     private var mediaPlayer = MediaPlayer()
+    private var playerState = PlayerState.DEFAULT_STATE
 
     override fun preparePlayer(previewUrl: String?) {
         mediaPlayer.apply {
             setDataSource(previewUrl)
+
         }
     }
 
@@ -23,10 +26,12 @@ class PlayerRepositoryImpl : PlayerRepository {
 
     override fun startPlayer() {
         mediaPlayer.start()
+        playerState = PlayerState.PLAYING_STATE
     }
 
     override fun pausePlayer() {
         mediaPlayer.pause()
+        playerState = PlayerState.PAUSE_STATE
     }
 
     override fun release() {

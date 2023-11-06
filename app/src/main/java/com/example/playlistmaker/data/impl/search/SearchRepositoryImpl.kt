@@ -1,6 +1,4 @@
 package com.example.playlistmaker.data.impl.search
-
-
 import com.example.playlistmaker.data.NetworkClient
 import com.example.playlistmaker.data.dto.TracksSearchRequest
 import com.example.playlistmaker.data.dto.TracksSearchResponse
@@ -8,11 +6,9 @@ import com.example.playlistmaker.domain.SearchResult
 import com.example.playlistmaker.domain.api.search.SearchRepository
 import com.example.playlistmaker.domain.models.search.Track
 
-
 class SearchRepositoryImpl(
     private val networkClient: NetworkClient
 ) : SearchRepository {
-
 
     override fun searchTrack(expression: String): SearchResult<List<Track>> {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
@@ -41,10 +37,6 @@ class SearchRepositoryImpl(
             else -> {
                 return SearchResult.Fail(errorId = "nothing found")
             }
-
         }
     }
-
-
 }
-

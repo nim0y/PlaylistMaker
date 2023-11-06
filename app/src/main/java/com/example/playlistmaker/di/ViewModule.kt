@@ -1,5 +1,6 @@
 package com.example.playlistmaker.di
 
+import com.example.playlistmaker.ui.player.AudioPlayerViewModel
 import com.example.playlistmaker.ui.search.SearchViewModel
 import com.example.playlistmaker.ui.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -10,6 +11,9 @@ val viewModelModule = module {
         SearchViewModel(searchInteractor = get(), historyInteractor = get())
     }
     viewModel {
-        SettingsViewModel(settingsInteractor = get(), buttonsInteractor = get())
+        SettingsViewModel(settingsInteractor = get(), externalNavigatorInteractor = get())
+    }
+    viewModel {
+        AudioPlayerViewModel(playerInteractor = get())
     }
 }

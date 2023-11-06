@@ -15,7 +15,6 @@ interface PlayerInteractor {
 
     fun setOnPreparedListener(listener: (() -> Unit)?)
 
-
     fun setOnCompletionListener(listener: (() -> Unit)?)
 
     fun getCurrentPosition(): Int

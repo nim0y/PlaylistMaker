@@ -1,6 +1,5 @@
 package com.example.playlistmaker.ui.search.activity
 
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,23 +7,21 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.example.playlistmaker.data.dto.Constants.DEBOUNCE_DELAY
-import com.example.playlistmaker.data.dto.Constants.SEARCH_QUERY_HISTORY
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.models.search.Track
 import com.example.playlistmaker.ui.player.AudioPlayerActivity
 import com.example.playlistmaker.ui.search.SearchViewModel
 import com.example.playlistmaker.ui.search.State
 import com.example.playlistmaker.ui.search.TrackAdapter
+import com.example.playlistmaker.utils.CLICK_DEBOUNCE
+import com.example.playlistmaker.utils.SEARCH_QUERY_HISTORY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
-
 
     private var binding: ActivitySearchBinding? = null
     private val handler = Handler(Looper.getMainLooper())
@@ -32,6 +29,7 @@ class SearchActivity : AppCompatActivity() {
     private val searchResAdapter = TrackAdapter()
     private val searchHistoryAdapter = TrackAdapter()
     private var currentSearchQuery: String? = null
+    private var textWatcher: TextWatcher? = null
     private val vm by viewModel<SearchViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,19 +40,21 @@ class SearchActivity : AppCompatActivity() {
         binding?.trackRecyclerView?.adapter = searchResAdapter
         binding?.trackRecyclerView?.itemAnimator = null
         binding?.searchHistoryRecycleView?.adapter = searchHistoryAdapter
-        binding?.trackRecyclerView?.itemAnimator = null
+        binding?.searchHistoryRecycleView?.itemAnimator = null
 
         searchResAdapter.itemClickListener = {
-            vm.addTrackToHistory(it)
-            vm.searchDebounce(binding?.editQuery?.text?.toString() ?: "")
-            openAudioPlayer(track = it)
+            if (clickDebounce()) {
+                vm.addTrackToHistory(it)
+                vm.queryDebounce(binding?.editQuery?.text?.toString() ?: "")
+                openAudioPlayer(track = it)
+            }
         }
         searchHistoryAdapter.itemClickListener = {
-            vm.addTrackToHistory(it)
-            openAudioPlayer(it)
+            if (clickDebounce()) {
+                vm.addTrackToHistory(it)
+                openAudioPlayer(it)
+            }
         }
-
-
 
         binding?.buttonBackSearch?.setOnClickListener {
             finish()
@@ -69,15 +69,33 @@ class SearchActivity : AppCompatActivity() {
 
         }
         binding?.searchRefreshButton?.setOnClickListener {
-            vm.searchDebounce(binding?.editQuery?.text?.toString() ?: "")
+            vm.queryDebounce(binding?.editQuery?.text?.toString() ?: "")
         }
 
         binding?.historyClearButton?.setOnClickListener {
-            vm.clearSearchHistory()
+            vm.toClearSearchHistory()
             searchHistoryAdapter.notifyItemRangeChanged(0, 10)
+        }
+        textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding?.clearIcon?.visibility = clearButtonVisibility(p0)
+                val queryNew = p0?.toString()
+                if (currentSearchQuery != queryNew) {
+                    currentSearchQuery = queryNew
+                    vm.queryDebounce(queryNew ?: "")
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
 
         }
-        setQueryListener()
+        textWatcher.let {
+            binding?.editQuery?.addTextChangedListener(it)
+        }
 
         vm.historyState.observe(this) {
             showHistory(it)
@@ -88,26 +106,9 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun setQueryListener() {
-        binding?.editQuery?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding?.clearIcon?.visibility = clearButtonVisibility(p0)
-                val queryNew = p0?.toString()
-                if (currentSearchQuery != queryNew) {
-                    currentSearchQuery = queryNew
-                    vm.some(queryNew ?: "")
-                }
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-        })
+    override fun onDestroy() {
+        super.onDestroy()
+        vm.onDestroyHandlerRemove()
     }
 
     private fun closeKeyboard() {
@@ -127,18 +128,16 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun openAudioPlayer(track: Track) {
-        if (clickDebounce()) {
             val intent = Intent(this, AudioPlayerActivity::class.java)
             intent.putExtra(SEARCH_QUERY_HISTORY, track)
             startActivity(intent)
-        }
     }
 
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, DEBOUNCE_DELAY)
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE)
         }
         return current
     }
@@ -154,7 +153,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showProgressBar() {
-
         binding?.noConnectionErrorLayout?.isVisible = false
         binding?.nothingFoundCaseLayout?.isVisible = false
         binding?.searchHistoryLayout?.isVisible = false
@@ -172,8 +170,8 @@ class SearchActivity : AppCompatActivity() {
         binding?.searchHistoryLayout?.isVisible = false
         binding?.trackRecyclerView?.isVisible = false
         binding?.progressBar?.isVisible = false
-    }
 
+    }
 
     private fun showSomeData(found: List<Track>?) {
         binding?.noConnectionErrorLayout?.isVisible = false
@@ -188,10 +186,8 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-
     private fun showHistory(historyList: List<Track>) {
-        if (historyList.isNullOrEmpty()) {
-            Log.e("myLog", "-------${historyList.size}")
+        if (historyList.isEmpty()) {
             binding?.searchHistoryLayout?.isVisible = false
         } else {
             binding?.noConnectionErrorLayout?.isVisible = false
@@ -205,10 +201,8 @@ class SearchActivity : AppCompatActivity() {
                 tracksList.addAll(historyList)
                 notifyItemRangeChanged(0, historyList.size)
             }
-
         }
     }
-
 
     private fun showNoConnection() {
         binding?.noConnectionErrorLayout?.isVisible = true
@@ -227,5 +221,4 @@ class SearchActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         binding?.editQuery?.setText(savedInstanceState.getString(SEARCH_QUERY_HISTORY))
     }
-
 }

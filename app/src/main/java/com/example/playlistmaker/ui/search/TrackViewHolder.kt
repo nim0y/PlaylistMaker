@@ -11,8 +11,6 @@ import com.example.playlistmaker.domain.models.search.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-const val CORNER_RADIUS = 10
-
 class TrackViewHolder(trackView: View) : RecyclerView.ViewHolder(trackView) {
     private val trackCover = trackView.findViewById<ImageView>(R.id.ic_disc_cover)
     private val trackName = trackView.findViewById<TextView>(R.id.track_name_text_view)
@@ -29,7 +27,7 @@ class TrackViewHolder(trackView: View) : RecyclerView.ViewHolder(trackView) {
             .load(item.artworkUrl100)
             .placeholder(R.drawable.ic_placeholder)
             .fitCenter()
-            .transform(RoundedCorners(CORNER_RADIUS))
+            .transform(RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.track_corner_radious)))
             .into(trackCover)
     }
 }

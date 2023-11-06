@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.app.ThemeSwitch
 import com.example.playlistmaker.domain.api.settings.AppTheme
-import com.example.playlistmaker.domain.api.settings.ButtonsInteractor
+import com.example.playlistmaker.domain.api.settings.ExternalNavigatorInteractor
 import com.example.playlistmaker.domain.api.settings.SettingsInteractor
 
 class SettingsViewModel(
     private val settingsInteractor: SettingsInteractor,
-    private val buttonsInteractor: ButtonsInteractor
+    private val externalNavigatorInteractor: ExternalNavigatorInteractor
 ) : ViewModel() {
 
     private val switchOnLiveData = MutableLiveData<Boolean>()
@@ -33,15 +33,15 @@ class SettingsViewModel(
     }
 
     fun onTermsOfUse() {
-        buttonsInteractor.termsOfUse()
+        externalNavigatorInteractor.termsOfUse()
     }
 
     fun onShare() {
-        buttonsInteractor.share()
+        externalNavigatorInteractor.share()
     }
 
     fun onSupport() {
-        buttonsInteractor.support()
+        externalNavigatorInteractor.support()
     }
 
 }

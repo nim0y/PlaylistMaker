@@ -3,15 +3,14 @@ package com.example.playlistmaker.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.playlistmaker.data.NetworkClient
-import com.example.playlistmaker.data.dto.Constants.IS_DARK_APP_THEME_KEY
-import com.example.playlistmaker.data.dto.Constants.ITUNES_URL
-import com.example.playlistmaker.data.dto.Constants.PREFER_SEARCH
 import com.example.playlistmaker.data.impl.search.HistoryRepositoryImpl
 import com.example.playlistmaker.data.impl.settings.SettingsRepositoryImpl
 import com.example.playlistmaker.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.data.network.SearchApi
-import com.example.playlistmaker.domain.implemantation.player.PlayerInteractorImpl
-import com.example.playlistmaker.domain.implemantation.settings.ButtonsInteractorImpl
+import com.example.playlistmaker.domain.implemantation.settings.ExternalNavigatorInteractorImpl
+import com.example.playlistmaker.utils.IS_DARK_APP_THEME_KEY
+import com.example.playlistmaker.utils.ITUNES_URL
+import com.example.playlistmaker.utils.PREFER_SEARCH
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
@@ -32,17 +31,12 @@ val dataModule = module {
     single { Gson() }
 
     single<NetworkClient> {
-        RetrofitNetworkClient(get())
+        RetrofitNetworkClient(get(), get())
     }
     single(named(PREFER_SEARCH)) {
         androidContext().getSharedPreferences(PREFER_SEARCH, Context.MODE_PRIVATE)
     }
-    single {
-        HistoryRepositoryImpl(get(), get())
-    }
-    factory {
-        PlayerInteractorImpl(get())
-    }
+
     single<SharedPreferences> {
         androidContext().getSharedPreferences(IS_DARK_APP_THEME_KEY, Context.MODE_PRIVATE)
     }
@@ -50,7 +44,10 @@ val dataModule = module {
         SettingsRepositoryImpl(get())
     }
     factory {
-        ButtonsInteractorImpl(get())
+        ExternalNavigatorInteractorImpl(get())
+    }
+    single {
+        HistoryRepositoryImpl(get(), get())
     }
 
 }

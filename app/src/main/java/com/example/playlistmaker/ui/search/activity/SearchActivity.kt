@@ -44,8 +44,7 @@ class SearchActivity : AppCompatActivity() {
 
         searchResAdapter.itemClickListener = {
             if (clickDebounce()) {
-                vm.addTrackToHistory(it)
-                vm.queryDebounce(binding?.editQuery?.text?.toString() ?: "")
+                vm.addTracktoHistoryInvisible(it)
                 openAudioPlayer(track = it)
             }
         }
@@ -64,6 +63,7 @@ class SearchActivity : AppCompatActivity() {
             closeKeyboard()
             binding?.trackRecyclerView?.isVisible = false
             binding?.progressBar?.isVisible = false
+            binding?.searchHistoryLayout?.isVisible = false
             searchHistoryAdapter.notifyItemRangeChanged(0, 10)
             binding?.editQuery?.clearFocus()
 
@@ -81,6 +81,12 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 binding?.clearIcon?.visibility = clearButtonVisibility(p0)
+                binding?.searchHistoryLayout?.visibility =
+                    if (binding?.editQuery?.hasFocus() == true && p0?.isEmpty() == true) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
                 val queryNew = p0?.toString()
                 if (currentSearchQuery != queryNew) {
                     currentSearchQuery = queryNew
@@ -95,6 +101,9 @@ class SearchActivity : AppCompatActivity() {
         }
         textWatcher.let {
             binding?.editQuery?.addTextChangedListener(it)
+        }
+        binding?.editQuery?.setOnFocusChangeListener { _, hasFocus ->
+            vm.historyModification()
         }
 
         vm.historyState.observe(this) {
@@ -189,7 +198,7 @@ class SearchActivity : AppCompatActivity() {
     private fun showHistory(historyList: List<Track>) {
         if (historyList.isEmpty()) {
             binding?.searchHistoryLayout?.isVisible = false
-        } else {
+        } else if (binding?.editQuery?.hasFocus() == true) {
             binding?.noConnectionErrorLayout?.isVisible = false
             binding?.nothingFoundCaseLayout?.isVisible = false
             binding?.searchHistoryLayout?.isVisible = true

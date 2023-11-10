@@ -70,7 +70,7 @@ class AudioPlayerActivity : AppCompatActivity() {
                 .load(track.artworkUrl512)
                 .placeholder(R.drawable.ic_placeholder)
                 .centerCrop()
-                .transform(RoundedCorners(applicationContext.resources.getDimensionPixelSize(R.dimen.track_corner_radious)))
+                .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.track_corner_radious)))
                 .into(it)
         }
     }

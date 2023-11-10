@@ -18,7 +18,7 @@ class AudioPlayerViewModel(
     val audioPlayerState: LiveData<PlayerState> = _audioPlayerState
     private val _timerLiveData = MutableLiveData(0)
     val timer: LiveData<Int> = _timerLiveData
-    private var state = PlayerState.DEFAULT_STATE
+
     private var handler = Handler(Looper.getMainLooper())
     private val timerRunnable = object : Runnable {
         override fun run() {
@@ -66,19 +66,14 @@ class AudioPlayerViewModel(
     }
 
     fun playControl() {
-        when (playerInteractor.playerCheck()) {
-            true -> {
-                playerInteractor.pausePlayer()
-                setState(PlayerState.PAUSE_STATE)
-                handler.removeCallbacks(timerRunnable)
-
-            }
-
-            false -> {
-                playerInteractor.startPlayer()
-                setState(PlayerState.PLAYING_STATE)
-                handler.post(timerRunnable)
-            }
+        if (playerInteractor.playerCheck()) {
+            playerInteractor.pausePlayer()
+            setState(PlayerState.PAUSE_STATE)
+            handler.removeCallbacks(timerRunnable)
+        } else {
+            playerInteractor.startPlayer()
+            setState(PlayerState.PLAYING_STATE)
+            handler.post(timerRunnable)
         }
     }
 }

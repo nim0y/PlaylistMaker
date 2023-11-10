@@ -2,7 +2,6 @@ package com.example.playlistmaker.ui.search
 
 import android.os.Handler
 import android.os.Looper
-import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,13 +21,13 @@ class SearchViewModel(
     val historyState: LiveData<List<Track>> = _historyState
 
     private val handler = Handler(Looper.getMainLooper())
-    private var searchRunnable: Runnable? = null
+    private var searchRunnable: Runnable? = Runnable { request?.invoke() }
     private var lastQuery: String? = null
+    private var request: (() -> Unit)? = null
 
     init {
         setState(State.SomeHistory(historyInteractor.read()))
     }
-
     private fun setState(state: State) {
         _searchState.postValue(state)
     }
@@ -38,20 +37,23 @@ class SearchViewModel(
         if (queryNew.isNullOrEmpty()) {
             setState(State.SomeHistory(historyInteractor.read()))
         } else {
-            setState(State.Load)
             searchDebounce { searchRequest(queryNew) }
         }
     }
 
     private fun searchDebounce(request: () -> Unit) {
-        searchRunnable = Runnable { request() }
+        this.request = request
         handler.removeCallbacksAndMessages(TOKEN)
-        val time = SystemClock.uptimeMillis() + DEBOUNCE_DELAY
-        handler.postAtTime(searchRunnable!!, TOKEN, time)
+        handler.postDelayed(searchRunnable!!, TOKEN, DEBOUNCE_DELAY)
+
     }
 
     fun onDestroyHandlerRemove() {
-        handler.removeCallbacksAndMessages(Any())
+        handler.removeCallbacksAndMessages(TOKEN)
+    }
+
+    fun addTracktoHistoryInvisible(track: Track) {
+        historyInteractor.add(track)
     }
 
     fun addTrackToHistory(track: Track) {
@@ -59,7 +61,7 @@ class SearchViewModel(
         setState(State.SomeHistory(historyInteractor.read()))
     }
 
-    private fun historyModification() {
+    fun historyModification() {
         setState(State.SomeHistory(historyInteractor.read()))
     }
 
@@ -74,6 +76,7 @@ class SearchViewModel(
     }
 
     private fun searchRequest(queryNew: String) {
+        setState(State.Load)
         if (lastQuery!!.isBlank()) {
             setState(State.SomeHistory(historyInteractor.read()))
         } else {
@@ -87,7 +90,7 @@ class SearchViewModel(
                                 }
 
                                 found.isNullOrEmpty() -> {
-                                    setState(State.NothingFound())
+                                    setState(State.NothingFound)
                                 }
 
                                 else -> {
@@ -103,6 +106,6 @@ class SearchViewModel(
     }
 
     companion object {
-        val TOKEN = Any()
+        private val TOKEN = Any()
     }
 }

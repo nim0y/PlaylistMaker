@@ -16,20 +16,18 @@ class SettingsViewModel(
 
     private val switchOnLiveData = MutableLiveData<Boolean>()
     val switchOnState: LiveData<Boolean> = switchOnLiveData
-    private var darkTheme = false
-
+    private var isDarkThemeEnabled = false
 
     init {
-        darkTheme = settingsInteractor.getTheme().swichOn
-        Log.e("myLog", "$darkTheme")
-        switchOnLiveData.value = false
+        isDarkThemeEnabled = settingsInteractor.getTheme().swichOn
+        Log.e("myLog", "$isDarkThemeEnabled")
     }
 
     fun onSwitchClicked(isChecked: Boolean) {
         switchOnLiveData.value = isChecked
         settingsInteractor.setTheme(AppTheme(swichOn = isChecked))
         ThemeSwitch.switch(isChecked)
-        Log.e("myLog", "$darkTheme")
+        Log.e("myLog", "$isDarkThemeEnabled")
     }
 
     fun onTermsOfUse() {

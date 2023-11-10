@@ -90,7 +90,7 @@
 
     <style name="switchstyle">
         <item name="android:text">@string/dark_theme_switch</item>
-        <item name="android:checked">false</item>
+
         <item name="android:textAppearance">@style/origin</item>
         <item name="trackTint">@color/yandex_gray</item>
         <item name="thumbTint">@color/yandex_light_gray</item>

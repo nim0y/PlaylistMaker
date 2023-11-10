@@ -21,4 +21,5 @@
     <dimen name="ap_margin_30">30dp</dimen>
     <dimen name="ap_text_padding">8dp</dimen>
     <dimen name="ap_text_size_13">13sp</dimen>
+    <dimen name="track_corner_radious">8dp</dimen>
 </resources>

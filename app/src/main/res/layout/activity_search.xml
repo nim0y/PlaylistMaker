@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/settingsbackground"
-    tools:context=".SearchActivity">
+    tools:context=".ui.search.activity.SearchActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,14 +33,12 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:paddingTop="@dimen/mid_padding"
-        android:paddingBottom="@dimen/mid_padding">
+        android:layout_height="56dp">
 
         <EditText
             android:id="@+id/edit_query"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
+            android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/edit_text_background"
             android:drawableStart="@drawable/search_icon_edit_text"
@@ -62,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:contentDescription="@android:string/cancel"
+            android:clickable="true"
             android:padding="@dimen/mid_padding"
             android:src="@drawable/search_close_ic"
             android:visibility="gone"
@@ -142,14 +141,15 @@
         android:text="@string/you_search"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_history_recycle_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="8"
-        android:layout_weight="1"
-        tools:listitem="@layout/view_track" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_history_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="8"
+            tools:listitem="@layout/view_track"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/history_clear_button"

@@ -3,11 +3,11 @@ package com.example.playlistmaker.ui.player
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.domain.api.player.PlayerInteractor
-import com.example.playlistmaker.domain.models.search.player.AudioPlayerState
 import com.example.playlistmaker.domain.models.search.player.PlayerState
 import com.example.playlistmaker.utils.TIMER_DELAY
 
@@ -16,85 +16,76 @@ class AudioPlayerViewModel(
     private val playerInteractor: PlayerInteractor
 ) : ViewModel() {
 
-    private val audioPlayerState = MutableLiveData<AudioPlayerState>()
-    private val playerState = MutableLiveData<PlayerState>()
-    val timerState = MutableLiveData<Int>()
-    val mediatorLiveData = MediatorLiveData<PlayerState>().apply {
-        addSource(playerState) { value ->
-            value?.let {
-                val currentPlayerState = audioPlayerState.value ?: AudioPlayerState(it, 0)
-                audioPlayerState.value = currentPlayerState
-            }
-        }
-        addSource(timerState) { value ->
-            value?.let {
-                val currentPlayerState =
-                    audioPlayerState.value ?: AudioPlayerState(PlayerState.DEFAULT_STATE, it)
-                audioPlayerState.value = currentPlayerState.copy(timerValue = it)
-            }
-        }
-    }
+    private val _playerState = MutableLiveData<PlayerState>()
+    private val _timerLiveData = MutableLiveData(0)
+    private val _unifiedLiveData = MediatorLiveData<Pair<PlayerState, Int>>()
+    val unifiedLiveData: LiveData<Pair<PlayerState, Int>> = _unifiedLiveData
 
     private var handler = Handler(Looper.getMainLooper())
     private val timerRunnable = object : Runnable {
         override fun run() {
-            timerState.postValue(playerInteractor.getCurrentPosition())
+            _timerLiveData.postValue(playerInteractor.getCurrentPosition())
             handler.postDelayed(this, TIMER_DELAY)
         }
     }
 
-    private fun setState(playerState: PlayerState) {
-        mediatorLiveData.postValue(playerState)
+    private fun setState(playerState: PlayerState, timerState: Int) {
+        _unifiedLiveData.postValue(Pair(playerState, timerState))
     }
 
     init {
-        setState(PlayerState.DEFAULT_STATE)
-        timerState.postValue(0)
+        _unifiedLiveData.addSource(_playerState) { playerState ->
+            _unifiedLiveData.value = Pair(playerState, _timerLiveData.value ?: 0)
+        }
+        _unifiedLiveData.addSource(_timerLiveData) { timerState ->
+            _unifiedLiveData.value =
+                Pair(_playerState.value ?: PlayerState.DEFAULT_STATE, timerState)
+        }
     }
 
     fun onPause() {
         playerInteractor.pausePlayer()
-        setState(PlayerState.PAUSE_STATE)
-        Log.e("myLog", "_______$playerState")
+        setState(PlayerState.PAUSE_STATE, _timerLiveData.value ?: 0)
+        Log.e("myLog", "_______$")
         handler.removeCallbacks(timerRunnable)
     }
 
     fun onDestroy() {
-        setState(PlayerState.DEFAULT_STATE)
+        setState(PlayerState.DEFAULT_STATE, _timerLiveData.value ?: 0)
         playerInteractor.release()
         handler.removeCallbacks(timerRunnable)
-        mediatorLiveData.removeSource(audioPlayerState)
-        mediatorLiveData.removeSource(timerState)
+        _unifiedLiveData.removeSource(_playerState)
+        _unifiedLiveData.removeSource(_timerLiveData)
     }
 
     override fun onCleared() {
         super.onCleared()
         playerInteractor.release()
-        mediatorLiveData.removeSource(audioPlayerState)
-        mediatorLiveData.removeSource(timerState)
+        _unifiedLiveData.removeSource(_playerState)
+        _unifiedLiveData.removeSource(_timerLiveData)
     }
 
     fun setPlayer(trackPreviewUrl: String) {
         playerInteractor.preparePlayer(trackPreviewUrl)
         playerInteractor.prepareAsync()
         playerInteractor.setOnPreparedListener {
-            setState(PlayerState.PREPARATION_STATE)
+            setState(PlayerState.PREPARATION_STATE, _timerLiveData.value ?: 0)
         }
         playerInteractor.setOnCompletionListener {
-            setState(PlayerState.PREPARATION_STATE)
+            setState(PlayerState.PREPARATION_STATE, _timerLiveData.value ?: 0)
             handler.removeCallbacks(timerRunnable)
-            timerState.postValue(0)
+            _timerLiveData.postValue(0)
         }
     }
 
     fun playControl() {
         if (playerInteractor.playerCheck()) {
             playerInteractor.pausePlayer()
-            setState(PlayerState.PAUSE_STATE)
+            setState(PlayerState.PAUSE_STATE, _timerLiveData.value ?: 0)
             handler.removeCallbacks(timerRunnable)
         } else {
             playerInteractor.startPlayer()
-            setState(PlayerState.PLAYING_STATE)
+            setState(PlayerState.PLAYING_STATE, _timerLiveData.value ?: 0)
             handler.post(timerRunnable)
         }
     }

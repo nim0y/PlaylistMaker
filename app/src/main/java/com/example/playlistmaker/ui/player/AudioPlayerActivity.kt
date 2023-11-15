@@ -2,8 +2,10 @@ package com.example.playlistmaker.ui.player
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
@@ -33,14 +35,13 @@ class AudioPlayerActivity : AppCompatActivity() {
 
         vm.setPlayer(track.previewUrl!!)
 
-        vm.mediatorLiveData.observe(this) {
-            execute(it)
-        }
-
-        vm.timerState.observe(this) {
-            binding?.playerTime?.text =
-                SimpleDateFormat("mm:ss", Locale.getDefault()).format(it)
-        }
+        vm.unifiedLiveData.observe(this, Observer { pair ->
+            val playerState = pair.first
+            val timer = pair.second
+            binding?.playerTime?.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(timer)
+            Log.e("myLog", "porisuem")
+            execute(playerState)
+        })
 
         binding?.buttonPlay?.setOnClickListener {
             vm.playControl()

@@ -16,10 +16,11 @@ class SettingsViewModel(
 
     private val switchOnLiveData = MutableLiveData<Boolean>()
     val switchOnState: LiveData<Boolean> = switchOnLiveData
-    private var isDarkThemeEnabled = false
+    private var isDarkThemeEnabled: Boolean = false
 
     init {
         isDarkThemeEnabled = settingsInteractor.getTheme().swichOn
+        switchOnLiveData.value = isDarkThemeEnabled
         Log.e("myLog", "$isDarkThemeEnabled")
     }
 

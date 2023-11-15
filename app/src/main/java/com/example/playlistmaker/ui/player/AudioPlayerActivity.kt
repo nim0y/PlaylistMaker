@@ -45,7 +45,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         binding?.buttonPlay?.setOnClickListener {
             vm.playControl()
         }
-        binding?.buttonBackPlayer?.setOnClickListener {
+        binding?.toolbarplayer?.setNavigationOnClickListener {
             finish()
         }
     }

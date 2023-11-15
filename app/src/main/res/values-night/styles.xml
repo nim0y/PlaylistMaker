@@ -43,6 +43,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingStart">16dp</item>
         <item name="android:textAppearance">@style/origin</item>
     </style>
 
@@ -80,6 +82,13 @@
         <item name="iconSize">24dp</item>
     </style>
 
+    <style name="toolbar" parent="settingsbuttonstyle">
+        <item name="contentInsetStartWithNavigation">64dp</item>
+        <item name="titleMarginTop">10dp</item>
+        <item name="navigationIcon">@drawable/back_arrow_dark_mode</item>
+        <item name="titleTextAppearance">@style/main</item>
+    </style>
+
     <style name="refresh_button_style">
         <item name="backgroundTint">@color/white</item>
         <item name="android:textColor">@color/black</item>
@@ -90,7 +99,8 @@
 
     <style name="switchstyle">
         <item name="android:text">@string/dark_theme_switch</item>
-        <item name="android:checked">true</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">12dp</item>
         <item name="android:textAppearance">@style/origin</item>
         <item name="trackTint">@color/yp_blue_light</item>
         <item name="thumbTint">@color/background_main</item>
@@ -109,7 +119,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/border_padding</item>
+
     </style>
 
     <style name="playerstyle">

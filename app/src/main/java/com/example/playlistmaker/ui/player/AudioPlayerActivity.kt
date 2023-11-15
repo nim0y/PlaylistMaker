@@ -33,11 +33,11 @@ class AudioPlayerActivity : AppCompatActivity() {
 
         vm.setPlayer(track.previewUrl!!)
 
-        vm.audioPlayerState.observe(this) {
+        vm.mediatorLiveData.observe(this) {
             execute(it)
         }
 
-        vm.timer.observe(this) {
+        vm.timerState.observe(this) {
             binding?.playerTime?.text =
                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(it)
         }

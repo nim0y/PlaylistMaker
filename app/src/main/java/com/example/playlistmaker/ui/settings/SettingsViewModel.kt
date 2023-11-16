@@ -1,6 +1,5 @@
 package com.example.playlistmaker.ui.settings
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,16 +18,14 @@ class SettingsViewModel(
     private var isDarkThemeEnabled: Boolean = false
 
     init {
-        isDarkThemeEnabled = settingsInteractor.getTheme().swichOn
+        isDarkThemeEnabled = settingsInteractor.getTheme().switchIsOn
         switchOnLiveData.value = isDarkThemeEnabled
-        Log.e("myLog", "$isDarkThemeEnabled")
     }
 
     fun onSwitchClicked(isChecked: Boolean) {
         switchOnLiveData.value = isChecked
-        settingsInteractor.setTheme(AppTheme(swichOn = isChecked))
+        settingsInteractor.setTheme(AppTheme(switchIsOn = isChecked))
         ThemeSwitch.switch(isChecked)
-        Log.e("myLog", "$isDarkThemeEnabled")
     }
 
     fun onTermsOfUse() {

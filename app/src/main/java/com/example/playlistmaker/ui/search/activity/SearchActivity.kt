@@ -55,7 +55,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        binding?.buttonBackSearch?.setOnClickListener {
+        binding?.toolbarSearch?.setNavigationOnClickListener {
             finish()
         }
         binding?.clearIcon?.setOnClickListener {
@@ -63,13 +63,15 @@ class SearchActivity : AppCompatActivity() {
             closeKeyboard()
             binding?.trackRecyclerView?.isVisible = false
             binding?.progressBar?.isVisible = false
+            binding?.nothingFoundCaseLayout?.isVisible = false
+            binding?.noConnectionErrorLayout?.isVisible = false
             binding?.searchHistoryLayout?.isVisible = false
             searchHistoryAdapter.notifyItemRangeChanged(0, 10)
             binding?.editQuery?.clearFocus()
 
         }
         binding?.searchRefreshButton?.setOnClickListener {
-            vm.queryDebounce(binding?.editQuery?.text?.toString() ?: "")
+            vm.queryDebounce(currentSearchQuery)
         }
 
         binding?.historyClearButton?.setOnClickListener {
@@ -102,7 +104,7 @@ class SearchActivity : AppCompatActivity() {
         textWatcher.let {
             binding?.editQuery?.addTextChangedListener(it)
         }
-        binding?.editQuery?.setOnFocusChangeListener { _, hasFocus ->
+        binding?.editQuery?.setOnFocusChangeListener { _, _ ->
             vm.historyModification()
         }
 
@@ -128,10 +130,8 @@ class SearchActivity : AppCompatActivity() {
 
     fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
-            binding?.searchHistoryLayout?.isVisible = true
             View.GONE
         } else {
-            binding?.searchHistoryLayout?.isVisible = false
             View.VISIBLE
         }
     }

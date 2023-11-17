@@ -1,3 +1,3 @@
 package com.example.playlistmaker.domain.api.settings
 
-class AppTheme(var swichOn: Boolean)
+class AppTheme(var switchIsOn: Boolean)

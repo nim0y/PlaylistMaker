@@ -3,16 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/track_padding"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    android:paddingStart="13dp"
+    android:paddingTop="@dimen/track_padding"
+    android:paddingEnd="12dp">
+
     <ImageView
         android:id="@+id/ic_disc_cover"
         android:layout_gravity="center"
         android:layout_width="@dimen/cover_image_w"
         android:layout_height="@dimen/cover_image_h"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
     <LinearLayout
         android:layout_width="0dp"
         android:paddingStart="@dimen/mid_padding"

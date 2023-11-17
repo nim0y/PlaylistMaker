@@ -13,7 +13,7 @@ class SettingsRepositoryImpl(private val sharedPreferences: SharedPreferences) :
 
     override fun setTheme(appTheme: AppTheme) {
         sharedPreferences.edit {
-            putBoolean(IS_DARK_APP_THEME_KEY, appTheme.swichOn)
+            putBoolean(IS_DARK_APP_THEME_KEY, appTheme.switchIsOn)
         }
     }
 

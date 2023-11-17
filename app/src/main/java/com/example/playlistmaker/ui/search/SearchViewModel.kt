@@ -28,6 +28,7 @@ class SearchViewModel(
     init {
         setState(State.SomeHistory(historyInteractor.read()))
     }
+
     private fun setState(state: State) {
         _searchState.postValue(state)
     }

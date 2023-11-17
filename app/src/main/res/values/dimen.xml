@@ -5,6 +5,7 @@
     <dimen name="text_size_error">19sp</dimen>
     <dimen name="text_size_button_refresh">14sp</dimen>
     <dimen name="button_refresh_corner_radius">54dp</dimen>
+    <dimen name="all_layouts_padding">4dp</dimen>
     <dimen name="mid_padding">8dp</dimen>
     <dimen name="top_margin">16dp</dimen>
     <dimen name="layout_error_margin_top">102dp</dimen>

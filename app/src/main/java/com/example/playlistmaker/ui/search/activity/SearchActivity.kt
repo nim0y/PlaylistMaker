@@ -55,7 +55,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        binding?.buttonBackSearch?.setOnClickListener {
+        binding?.toolbarSearch?.setNavigationOnClickListener {
             finish()
         }
         binding?.clearIcon?.setOnClickListener {

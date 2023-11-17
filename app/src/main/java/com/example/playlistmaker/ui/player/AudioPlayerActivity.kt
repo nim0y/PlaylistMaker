@@ -33,19 +33,16 @@ class AudioPlayerActivity : AppCompatActivity() {
 
         vm.setPlayer(track.previewUrl!!)
 
-        vm.audioPlayerState.observe(this) {
-            execute(it)
-        }
-
-        vm.timer.observe(this) {
+        vm.audioPlayerState.observe(this) { state ->
             binding?.playerTime?.text =
-                SimpleDateFormat("mm:ss", Locale.getDefault()).format(it)
+                SimpleDateFormat("mm:ss", Locale.getDefault()).format(state.timerValue)
+            execute(state.playerState)
         }
 
         binding?.buttonPlay?.setOnClickListener {
             vm.playControl()
         }
-        binding?.buttonBackPlayer?.setOnClickListener {
+        binding?.toolbarplayer?.setNavigationOnClickListener {
             finish()
         }
     }

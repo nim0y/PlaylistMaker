@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.domain.api.player.PlayerInteractor
+import com.example.playlistmaker.domain.models.search.player.AudioPlayerState
 import com.example.playlistmaker.domain.models.search.player.PlayerState
 import com.example.playlistmaker.utils.TIMER_DELAY
 
@@ -14,30 +15,42 @@ class AudioPlayerViewModel(
     private val playerInteractor: PlayerInteractor
 ) : ViewModel() {
 
-    private val _audioPlayerState = MutableLiveData<PlayerState>()
-    val audioPlayerState: LiveData<PlayerState> = _audioPlayerState
-    private val _timerLiveData = MutableLiveData(0)
-    val timer: LiveData<Int> = _timerLiveData
+    private val _audioPlayerState = MutableLiveData(
+        AudioPlayerState(
+            playerState = PlayerState.DEFAULT_STATE,
+            timerValue = 0
+        )
+    )
+    val audioPlayerState: LiveData<AudioPlayerState> = _audioPlayerState
 
     private var handler = Handler(Looper.getMainLooper())
     private val timerRunnable = object : Runnable {
         override fun run() {
-            _timerLiveData.postValue(playerInteractor.getCurrentPosition())
+            _audioPlayerState.postValue(
+                _audioPlayerState.value?.copy(
+                    timerValue = playerInteractor.getCurrentPosition()
+                )
+            )
             handler.postDelayed(this, TIMER_DELAY)
         }
     }
 
     private fun setState(playerState: PlayerState) {
-        _audioPlayerState.postValue(playerState)
+        _audioPlayerState.postValue(audioPlayerState.value?.copy(playerState = playerState))
     }
 
-    init {
-        setState(PlayerState.DEFAULT_STATE)
+    private fun setTimer() {
+        _audioPlayerState.postValue(
+            audioPlayerState.value?.copy(
+                playerState = PlayerState.PREPARATION_STATE,
+                timerValue = 0
+            )
+        )
     }
 
     fun onPause() {
         playerInteractor.pausePlayer()
-        setState(PlayerState.PAUSE_STATE)
+        setState(playerState = PlayerState.PAUSE_STATE)
         handler.removeCallbacks(timerRunnable)
     }
 
@@ -59,9 +72,8 @@ class AudioPlayerViewModel(
             setState(PlayerState.PREPARATION_STATE)
         }
         playerInteractor.setOnCompletionListener {
-            setState(PlayerState.PREPARATION_STATE)
             handler.removeCallbacks(timerRunnable)
-            _timerLiveData.postValue(0)
+            setTimer()
         }
     }
 

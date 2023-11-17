@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
             binding?.switchcompat?.isChecked = isChecked
         }
 
-        binding?.buttonBack?.setOnClickListener {
+        binding?.toolbarsettings?.setNavigationOnClickListener {
             finish()
         }
         binding?.switchcompat?.setOnCheckedChangeListener { _, isChecked ->

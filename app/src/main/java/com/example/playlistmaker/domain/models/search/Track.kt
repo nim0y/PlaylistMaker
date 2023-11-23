@@ -1,10 +1,9 @@
 package com.example.playlistmaker.domain.models.search
 
-import android.icu.text.SimpleDateFormat
-import android.os.Parcel
 import android.os.Parcelable
-import java.util.Locale
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Track(
     val trackId: String?,
     var trackName: String?,
@@ -20,53 +19,6 @@ data class Track(
 
     val artworkUrl512
         get() = artworkUrl100?.replaceAfterLast('/', "512x512bb.jpg")
-
-    val trackTime
-        get() = SimpleDateFormat("mm:ss", Locale.getDefault())
-            .format(trackTimeMillis?.toLong())
-
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(trackId)
-        parcel.writeString(trackName)
-        parcel.writeString(artistName)
-        parcel.writeValue(trackTimeMillis)
-        parcel.writeString(artworkUrl100)
-        parcel.writeString(collectionName)
-        parcel.writeString(releaseDate)
-        parcel.writeString(primaryGenreName)
-        parcel.writeString(country)
-        parcel.writeString(previewUrl)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Track> {
-        override fun createFromParcel(parcel: Parcel): Track {
-            return Track(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Track?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-
 }
 
 

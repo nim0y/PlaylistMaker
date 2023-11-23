@@ -14,19 +14,19 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single<SearchRepository> {
-        SearchRepositoryImpl(get())
+        SearchRepositoryImpl(networkClient = get())
     }
     factory<PlayerRepository> {
-        PlayerRepositoryImpl(get())
+        PlayerRepositoryImpl(mediaPlayer = get())
     }
     single<HistoryRepository> {
-        HistoryRepositoryImpl(get(), get())
+        HistoryRepositoryImpl(context = get(), gson = get())
     }
     single<SettingsRepository> {
-        SettingsRepositoryImpl(get())
+        SettingsRepositoryImpl(sharedPreferences = get())
     }
     single<ExternalNavigatorRepository> {
-        ExternalNavigatorRepositoryImpl(get())
+        ExternalNavigatorRepositoryImpl(context = get())
     }
 
 }

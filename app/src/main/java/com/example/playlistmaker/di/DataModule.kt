@@ -36,7 +36,7 @@ val dataModule = module {
     }
 
     single<NetworkClient> {
-        RetrofitNetworkClient(get(), get())
+        RetrofitNetworkClient(context = get(), iTunesService = get())
     }
     single(named(PREFER_SEARCH)) {
         androidContext().getSharedPreferences(PREFER_SEARCH, Context.MODE_PRIVATE)
@@ -46,13 +46,13 @@ val dataModule = module {
         androidContext().getSharedPreferences(IS_DARK_APP_THEME_KEY, Context.MODE_PRIVATE)
     }
     factory {
-        SettingsRepositoryImpl(get())
+        SettingsRepositoryImpl(sharedPreferences = get())
     }
     factory {
-        ExternalNavigatorInteractorImpl(get())
+        ExternalNavigatorInteractorImpl(externalNavigatorRepository = get())
     }
     single {
-        HistoryRepositoryImpl(get(), get())
+        HistoryRepositoryImpl(context = get(), gson = get())
     }
 
 }

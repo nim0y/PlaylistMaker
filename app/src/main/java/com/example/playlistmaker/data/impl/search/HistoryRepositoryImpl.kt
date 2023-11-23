@@ -16,7 +16,7 @@ class HistoryRepositoryImpl(context: Context, private val gson: Gson) : HistoryR
 
     override fun read(): List<Track> {
         val json = sharedPreferences.getString(PREF_KEY, null) ?: return emptyList()
-        return Gson().fromJson(json, Array<Track>::class.java).toList()
+        return gson.fromJson(json, Array<Track>::class.java).toList()
     }
 
     override fun clear() = sharedPreferences.edit().clear().apply()

@@ -6,9 +6,9 @@
     tools:context=".ui.settings.SettingsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
         android:id="@+id/toolbarsettings"
         style="@style/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginHorizontal="@dimen/all_layouts_padding"
         android:layout_marginTop="4dp"

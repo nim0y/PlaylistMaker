@@ -135,5 +135,12 @@
         <item name="android:src">@drawable/dark_mode_no_connection_error</item>
     </style>
 
+    <style name="tabStyle">
+        <item name="tabTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:background">?attr/background</item>
+    </style>
+
 
 </resources>

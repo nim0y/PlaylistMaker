@@ -158,6 +158,7 @@ class SearchActivity : AppCompatActivity() {
             is State.Error -> showNoConnection()
             is State.Load -> showProgressBar()
             is State.NothingFound -> showNothing()
+            else -> {}
         }
     }
 

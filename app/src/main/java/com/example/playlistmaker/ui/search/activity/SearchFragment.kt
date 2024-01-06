@@ -20,6 +20,8 @@ import com.example.playlistmaker.ui.search.SearchViewModel
 import com.example.playlistmaker.ui.search.State
 import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.utils.CLICK_DEBOUNCE
+import com.example.playlistmaker.utils.MAX_LIST_SIZE
+import com.example.playlistmaker.utils.MAX_TEMP_LIST_SIZE
 import com.example.playlistmaker.utils.SEARCH_QUERY_HISTORY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -71,7 +73,7 @@ class SearchFragment : Fragment() {
             binding.nothingFoundCaseLayout.isVisible = false
             binding.noConnectionErrorLayout.isVisible = false
             binding.searchHistoryLayout.isVisible = false
-            searchHistoryAdapter.notifyItemRangeChanged(0, 10)
+            searchHistoryAdapter.notifyItemRangeChanged(0, MAX_TEMP_LIST_SIZE)
             binding.editQuery.clearFocus()
 
         }
@@ -81,7 +83,7 @@ class SearchFragment : Fragment() {
 
         binding.historyClearButton.setOnClickListener {
             vm.toClearSearchHistory()
-            searchHistoryAdapter.notifyItemRangeChanged(0, 10)
+            searchHistoryAdapter.notifyItemRangeChanged(0, MAX_TEMP_LIST_SIZE)
         }
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -170,7 +172,7 @@ class SearchFragment : Fragment() {
         binding.progressBar.isVisible = true
         with(searchResAdapter) {
             tracksList.clear()
-            notifyItemRangeChanged(0, 50)
+            notifyItemRangeChanged(0, MAX_LIST_SIZE)
         }
     }
 

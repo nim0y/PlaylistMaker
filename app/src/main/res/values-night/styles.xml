@@ -148,7 +148,7 @@
         <item name="tabTextColor">@color/white</item>
         <item name="tabIndicatorColor">@color/white</item>
         <item name="textAllCaps">false</item>
-        <item name="tabSelectedTextColor">@color/background_main</item>
+        <item name="tabSelectedTextColor">@color/white</item>
         <item name="android:background">?attr/background</item>
     </style>
 

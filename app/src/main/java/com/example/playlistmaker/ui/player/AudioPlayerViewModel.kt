@@ -67,10 +67,10 @@ class AudioPlayerViewModel(
 
     fun setPlayer(trackPreviewUrl: String) {
         playerInteractor.preparePlayer(trackPreviewUrl)
-        playerInteractor.prepareAsync()
         playerInteractor.setOnPreparedListener {
             setState(PlayerState.PREPARATION_STATE)
         }
+        playerInteractor.prepareAsync()
         playerInteractor.setOnCompletionListener {
             handler.removeCallbacks(timerRunnable)
             setTimer()

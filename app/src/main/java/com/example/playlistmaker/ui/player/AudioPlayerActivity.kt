@@ -18,14 +18,14 @@ import java.util.Locale
 
 class AudioPlayerActivity : AppCompatActivity() {
 
-    private var binding: ActivityAudioPlayerBinding? = null
+    private lateinit var binding: ActivityAudioPlayerBinding
     private lateinit var track: Track
     private val vm by viewModel<AudioPlayerViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         track = IntentCompat.getParcelableExtra(intent, SEARCH_QUERY_HISTORY, Track::class.java)!!
 
@@ -34,21 +34,21 @@ class AudioPlayerActivity : AppCompatActivity() {
         vm.setPlayer(track.previewUrl!!)
 
         vm.audioPlayerState.observe(this) { state ->
-            binding?.playerTime?.text =
+            binding.playerTime.text =
                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(state.timerValue)
             execute(state.playerState)
         }
 
-        binding?.buttonPlay?.setOnClickListener {
+        binding.buttonPlay.setOnClickListener {
             vm.playControl()
         }
-        binding?.toolbarplayer?.setNavigationOnClickListener {
+        binding.toolbarplayer.setNavigationOnClickListener {
             finish()
         }
     }
 
     private fun showTrack(track: Track) {
-        binding?.apply {
+        binding.apply {
             trackName.text = track.trackName
             artistName.text = track.artistName
             trackGenreTv.text = track.primaryGenreName
@@ -62,7 +62,7 @@ class AudioPlayerActivity : AppCompatActivity() {
             ).year.toString()
         }
 
-        binding?.icPlayerDiscCover?.let {
+        binding.icPlayerDiscCover.let {
             Glide.with(this)
                 .load(track.artworkUrl512)
                 .placeholder(R.drawable.ic_placeholder)
@@ -83,7 +83,7 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     override fun onPause() {
         vm.onPause()
-        binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
+        binding.buttonPlay.setImageResource(R.drawable.ic_play_button)
         super.onPause()
     }
 
@@ -93,10 +93,10 @@ class AudioPlayerActivity : AppCompatActivity() {
     }
 
     private fun setIconPlay() {
-        binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button)
+        binding.buttonPlay.setImageResource(R.drawable.ic_play_button)
     }
 
     private fun setIconPause() {
-        binding?.buttonPlay?.setImageResource(R.drawable.ic_play_button_clicked)
+        binding.buttonPlay.setImageResource(R.drawable.ic_play_button_clicked)
     }
 }

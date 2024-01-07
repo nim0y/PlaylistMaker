@@ -56,7 +56,7 @@ class AudioPlayerViewModel(
 
     fun onDestroy() {
         setState(PlayerState.DEFAULT_STATE)
-        playerInteractor.release()
+        playerInteractor.reset()
         handler.removeCallbacks(timerRunnable)
     }
 

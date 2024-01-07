@@ -88,8 +88,8 @@ class AudioPlayerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         vm.onDestroy()
+        super.onDestroy()
     }
 
     private fun setIconPlay() {

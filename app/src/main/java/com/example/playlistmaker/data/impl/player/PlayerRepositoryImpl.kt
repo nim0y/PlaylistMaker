@@ -36,6 +36,10 @@ class PlayerRepositoryImpl(private val mediaPlayer: MediaPlayer) : PlayerReposit
         mediaPlayer.release()
     }
 
+    override fun reset() {
+        mediaPlayer.reset()
+    }
+
     override fun setOnPreparedListener(listener: (() -> Unit)?) {
         mediaPlayer.setOnPreparedListener { listener?.invoke() }
     }

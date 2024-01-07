@@ -29,6 +29,10 @@ class PlayerInteractorImpl(private val playerRepository: PlayerRepository) : Pla
         playerRepository.release()
     }
 
+    override fun reset() {
+        playerRepository.reset()
+    }
+
     override fun setOnPreparedListener(listener: (() -> Unit)?) {
         playerRepository.setOnPreparedListener(listener)
     }

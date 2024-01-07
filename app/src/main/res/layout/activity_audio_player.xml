@@ -25,7 +25,7 @@
     <androidx.appcompat.widget.Toolbar
         app:layout_constraintBottom_toTopOf="@id/ic_player_disc_cover"
         android:id="@+id/toolbarplayer"
-        style="@style/toolbar"
+        style="@style/toolbaraudio"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="48dp"

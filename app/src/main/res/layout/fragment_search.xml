@@ -44,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:contentDescription="@android:string/cancel"
             android:clickable="true"
+            android:contentDescription="@android:string/cancel"
             android:padding="@dimen/mid_padding"
             android:src="@drawable/search_close_ic"
             android:visibility="gone"
@@ -150,9 +150,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/track_recycler_view"
         android:layout_width="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_margin"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/view_track"
         tools:visibility="visible" />
 

@@ -13,6 +13,8 @@ interface PlayerInteractor {
 
     fun release()
 
+    fun reset()
+
     fun setOnPreparedListener(listener: (() -> Unit)?)
 
     fun setOnCompletionListener(listener: (() -> Unit)?)

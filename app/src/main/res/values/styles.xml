@@ -84,6 +84,11 @@
     </style>
 
     <style name="toolbar" parent="settingsbuttonstyle">
+        <item name="titleMarginTop">10dp</item>
+        <item name="titleTextAppearance">@style/main</item>
+    </style>
+
+    <style name="toolbaraudio" parent="settingsbuttonstyle">
         <item name="contentInsetStartWithNavigation">64dp</item>
         <item name="titleMarginTop">10dp</item>
         <item name="navigationIcon">@drawable/back_arrow</item>
@@ -106,13 +111,6 @@
         <item name="thumbTint">@color/yandex_light_gray</item>
     </style>
 
-    <style name="mainbackground">
-        <item name="android:background">@color/background_main</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/border_padding</item>
-    </style>
 
     <style name="settingsbackground">
         <item name="android:background">@color/white</item>
@@ -135,10 +133,24 @@
         <item name="android:src">@drawable/light_mode_no_connection_error</item>
     </style>
 
+    <style name="test">
+        <item name="textFillColor">@color/purple_200</item>
+    </style>
+
+    <style name="bottomViewStyle">
+        <item name="android:background">@color/black</item>
+    </style>
+
     <style name="tabStyle">
         <item name="tabTextColor">@color/black</item>
+        <item name="tabSelectedTextColor">@color/black</item>
         <item name="tabIndicatorColor">@color/black</item>
         <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="bottomNavStyle">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="itemIconTint">@drawable/bottom_nav_color_state</item>
     </style>
 
 

@@ -52,12 +52,8 @@ class AudioPlayerViewModel(
 
     fun onDestroy() {
         setState(PlayerState.DEFAULT_STATE)
-        playerInteractor.release()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        playerInteractor.release()
+        timerJob?.cancel()
+        playerInteractor.reset()
     }
 
     fun setPlayer(trackPreviewUrl: String) {

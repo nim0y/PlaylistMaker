@@ -8,7 +8,6 @@ import com.example.playlistmaker.domain.models.search.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
 class SearchInteractorImpl(
     private val searchRepository: SearchRepository,
 ) : SearchInteractor {
@@ -20,5 +19,4 @@ class SearchInteractorImpl(
             }
         }
     }
-
 }

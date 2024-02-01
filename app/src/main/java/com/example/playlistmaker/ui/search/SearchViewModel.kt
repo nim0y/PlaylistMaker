@@ -1,14 +1,16 @@
 package com.example.playlistmaker.ui.search
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.domain.api.search.HistoryInteractor
 import com.example.playlistmaker.domain.api.search.SearchInteractor
 import com.example.playlistmaker.domain.models.search.Track
 import com.example.playlistmaker.utils.DEBOUNCE_DELAY
+import com.example.playlistmaker.utils.Debounce
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val searchInteractor: SearchInteractor,
@@ -20,10 +22,14 @@ class SearchViewModel(
     private val _historyState = MutableLiveData(historyInteractor.read())
     val historyState: LiveData<List<Track>> = _historyState
 
-    private val handler = Handler(Looper.getMainLooper())
-    private var searchRunnable: Runnable? = Runnable { request?.invoke() }
     private var lastQuery: String? = null
-    private var request: (() -> Unit)? = null
+    private val debounceHandler = Debounce()
+    private val debounceTrack = debounceHandler.debounce<String>(
+        DEBOUNCE_DELAY,
+        viewModelScope,
+        true,
+    ) { searchRequest(it) }
+
 
     init {
         setState(State.SomeHistory(historyInteractor.read()))
@@ -33,24 +39,17 @@ class SearchViewModel(
         _searchState.postValue(state)
     }
 
-    fun queryDebounce(queryNew: String?) {
+    fun queryDebounce(queryNew: String) {
         lastQuery = queryNew
         if (queryNew.isNullOrEmpty()) {
             setState(State.SomeHistory(historyInteractor.read()))
         } else {
-            searchDebounce { searchRequest(queryNew) }
+            debounceTrack(queryNew)
         }
-    }
-
-    private fun searchDebounce(request: () -> Unit) {
-        this.request = request
-        handler.removeCallbacksAndMessages(TOKEN)
-        handler.postDelayed(searchRunnable!!, TOKEN, DEBOUNCE_DELAY)
 
     }
 
     fun onDestroyHandlerRemove() {
-        handler.removeCallbacksAndMessages(TOKEN)
     }
 
     fun addTracktoHistoryInvisible(track: Track) {
@@ -68,7 +67,6 @@ class SearchViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        handler.removeCallbacksAndMessages(searchRunnable)
     }
 
     fun toClearSearchHistory() {
@@ -81,32 +79,23 @@ class SearchViewModel(
         if (lastQuery!!.isBlank()) {
             setState(State.SomeHistory(historyInteractor.read()))
         } else {
-            searchInteractor.searchTracks(
-                queryNew, object : SearchInteractor.TrackConsumer {
-                    override fun consume(found: List<Track>?, errorId: String?) {
-                        handler.post {
-                            when {
-                                errorId != null -> {
-                                    setState(State.Error)
-                                }
+            viewModelScope.launch(Dispatchers.IO) {
+                searchInteractor.searchTracks(queryNew).collect { pair ->
+                    when {
+                        pair.second != null -> {
+                            setState(State.Error)
+                        }
 
-                                found.isNullOrEmpty() -> {
-                                    setState(State.NothingFound)
-                                }
+                        pair.first.isNullOrEmpty() -> {
+                            setState(State.NothingFound)
+                        }
 
-                                else -> {
-                                    setState(State.SomeData(found))
-                                }
-                            }
-
+                        else -> {
+                            setState(State.SomeData(pair.first!!))
                         }
                     }
                 }
-            )
+            }
         }
-    }
-
-    companion object {
-        private val TOKEN = Any()
     }
 }

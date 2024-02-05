@@ -110,7 +110,7 @@ class AudioPlayerFragment : Fragment() {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
             ).year.toString()
         }
-        trackPreviewUrl = track.previewUrl
+        trackPreviewUrl = track.previewUrl!!
         binding.icPlayerDiscCover.let {
             Glide.with(this)
                 .load(track.artworkUrl512)

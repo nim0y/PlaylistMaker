@@ -4,6 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.playlistmaker.ui.mediateka.favorite.FavoriteTracksFragment
+import com.example.playlistmaker.ui.mediateka.playlists.PlayListFragment
 import com.example.playlistmaker.utils.FRAGMENT_COUNT
 
 class ViewPagerAdapter(fm: FragmentManager, lifecycle: androidx.lifecycle.Lifecycle) :
@@ -19,5 +21,4 @@ class ViewPagerAdapter(fm: FragmentManager, lifecycle: androidx.lifecycle.Lifecy
             else -> PlayListFragment.newInstance()
         }
     }
-
 }

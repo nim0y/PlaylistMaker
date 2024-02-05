@@ -2,49 +2,98 @@ package com.example.playlistmaker.ui.player
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.IntentCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.databinding.ActivityAudioPlayerBinding
+import com.example.playlistmaker.databinding.FragmentAudioPlayerBinding
 import com.example.playlistmaker.domain.models.search.Track
+import com.example.playlistmaker.domain.models.search.player.FavoriteState
 import com.example.playlistmaker.domain.models.search.player.PlayerState
+import com.example.playlistmaker.ui.MainActivity
 import com.example.playlistmaker.utils.SEARCH_QUERY_HISTORY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class AudioPlayerActivity : AppCompatActivity() {
+class AudioPlayerFragment : Fragment() {
 
-    private lateinit var binding: ActivityAudioPlayerBinding
+    private var _binding: FragmentAudioPlayerBinding? = null
+    private val binding get() = _binding!!
     private lateinit var track: Track
+    private lateinit var trackPreviewUrl: String
     private val vm by viewModel<AudioPlayerViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAudioPlayerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        track = IntentCompat.getParcelableExtra(intent, SEARCH_QUERY_HISTORY, Track::class.java)!!
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        track = arguments?.getParcelable<Track>(SEARCH_QUERY_HISTORY)!!
+
+        (activity as MainActivity).hideNavBar()
 
         showTrack(track)
 
-        vm.setPlayer(track.previewUrl!!)
 
-        vm.audioPlayerState.observe(this) { state ->
+        vm.isFavorite(track)
+
+        vm.audioPlayerState.observe(viewLifecycleOwner) { state ->
             binding.playerTime.text =
                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(state.timerValue)
             execute(state.playerState)
         }
 
+        vm.favoriteState.observe(viewLifecycleOwner) { isFavorite ->
+            like(isFavorite)
+        }
+
+        binding.buttonLike.setOnClickListener {
+            vm.clickOnFavorite(track)
+        }
+
         binding.buttonPlay.setOnClickListener {
             vm.playControl()
         }
+
+        vm.setPlayer(trackPreviewUrl)
+
         binding.toolbarplayer.setNavigationOnClickListener {
-            finish()
+            findNavController().navigateUp()
+            (activity as MainActivity).showNavBar()
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (activity as? MainActivity)?.showNavBar()
+                findNavController().navigateUp()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        vm.onDestroy()
+        _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        vm.onPause()
+        binding.buttonPlay.setImageResource(R.drawable.ic_play_button)
     }
 
     private fun showTrack(track: Track) {
@@ -61,7 +110,7 @@ class AudioPlayerActivity : AppCompatActivity() {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
             ).year.toString()
         }
-
+        trackPreviewUrl = track.previewUrl
         binding.icPlayerDiscCover.let {
             Glide.with(this)
                 .load(track.artworkUrl512)
@@ -81,15 +130,11 @@ class AudioPlayerActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPause() {
-        vm.onPause()
-        binding.buttonPlay.setImageResource(R.drawable.ic_play_button)
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        vm.onDestroy()
-        super.onDestroy()
+    private fun like(isFavoriteState: FavoriteState) {
+        when (isFavoriteState) {
+            FavoriteState(true) -> binding.buttonLike.setImageResource(R.drawable.ic_like_button_clicked)
+            FavoriteState(false) -> binding.buttonLike.setImageResource(R.drawable.ic_like_button)
+        }
     }
 
     private fun setIconPlay() {

@@ -33,6 +33,8 @@ class FavoriteTracksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        vm.getFavoriteList()
+        binding.favoriteListEmpty.visibility = View.GONE
         binding.favoriteRecyclerView.adapter = favoriteAdapter
 
         favoriteAdapter.itemClickListener = {
@@ -49,6 +51,7 @@ class FavoriteTracksFragment : Fragment() {
             is FavoriteState.Content -> showFavoritesList(favoriteState.tracks)
             is FavoriteState.NoEntry -> showBlank()
             is FavoriteState.Load -> showLoading()
+            else -> {}
         }
     }
 
@@ -60,7 +63,7 @@ class FavoriteTracksFragment : Fragment() {
         with(favoriteAdapter) {
             tracksList.clear()
             tracksList.addAll(tracks)
-            notifyItemRangeChanged(0, tracksList.size)
+            notifyDataSetChanged()
         }
     }
 
@@ -74,11 +77,6 @@ class FavoriteTracksFragment : Fragment() {
         binding.favoriteListEmpty.visibility = View.GONE
         binding.favoritesProgressBar.visibility = View.VISIBLE
         binding.favoriteRecyclerView.visibility = View.GONE
-    }
-
-    override fun onResume() {
-        super.onResume()
-        vm.getFavoriteList()
     }
 
     private fun openAudioPlayer(track: Track) {

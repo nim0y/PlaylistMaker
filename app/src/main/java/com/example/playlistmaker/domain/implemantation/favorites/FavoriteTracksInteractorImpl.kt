@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data.impl.db
+package com.example.playlistmaker.domain.implemantation.favorites
 
 import com.example.playlistmaker.domain.db.FavoriteTracksInteractor
 import com.example.playlistmaker.domain.db.FavoriteTracksRepository

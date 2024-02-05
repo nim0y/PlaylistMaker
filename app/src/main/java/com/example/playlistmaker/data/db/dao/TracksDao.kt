@@ -20,4 +20,5 @@ interface TracksDao {
 
     @Query("SELECT EXISTS (SELECT 1 FROM favorite_tracks_tablet  WHERE trackId = :trackId)")
     suspend fun isFavoriteTrack(trackId: Int): Boolean
+
 }

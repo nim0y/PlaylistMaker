@@ -11,15 +11,11 @@ class FavoriteTracksViewModel(
     private val favoriteTracksInteractor: FavoriteTracksInteractor
 ) : ViewModel() {
 
-    private val _favoriteState = MutableLiveData<FavoriteState>()
+    private val _favoriteState = MutableLiveData<FavoriteState>(FavoriteState.Load)
     val favoriteState: LiveData<FavoriteState> = _favoriteState
 
     private fun setState(favoriteState: FavoriteState) {
         _favoriteState.postValue(favoriteState)
-    }
-
-    init {
-        setState(FavoriteState.Load)
     }
 
     fun getFavoriteList() {

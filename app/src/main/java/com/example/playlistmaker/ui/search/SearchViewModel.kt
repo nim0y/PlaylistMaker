@@ -65,10 +65,6 @@ class SearchViewModel(
         setState(State.SomeHistory(historyInteractor.read()))
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
-
     fun toClearSearchHistory() {
         historyInteractor.clear()
         historyModification()

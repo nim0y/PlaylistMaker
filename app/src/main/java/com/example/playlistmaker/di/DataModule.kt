@@ -11,6 +11,7 @@ import com.example.playlistmaker.data.impl.settings.SettingsRepositoryImpl
 import com.example.playlistmaker.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.data.network.SearchApi
 import com.example.playlistmaker.domain.implemantation.settings.ExternalNavigatorInteractorImpl
+import com.example.playlistmaker.utils.FAVORITE_DATABASE
 import com.example.playlistmaker.utils.IS_DARK_APP_THEME_KEY
 import com.example.playlistmaker.utils.ITUNES_URL
 import com.example.playlistmaker.utils.PREFER_SEARCH
@@ -49,7 +50,7 @@ val dataModule = module {
     }
 
     single {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, FAVORITE_DATABASE)
             .fallbackToDestructiveMigration()
             .build()
     }

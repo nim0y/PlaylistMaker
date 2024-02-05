@@ -29,7 +29,8 @@ class SearchRepositoryImpl(
                             it.releaseDate,
                             it.primaryGenreName,
                             it.country,
-                            it.previewUrl
+                            it.previewUrl,
+                            it.insertTime
                         )
                     }
                     emit(SearchResult.Success(data))

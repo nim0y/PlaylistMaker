@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchInteractor {
     suspend fun searchTracks(expression: String): Flow<Pair<List<Track>?, String?>>
+
 }

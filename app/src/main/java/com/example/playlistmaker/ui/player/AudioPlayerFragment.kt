@@ -42,7 +42,7 @@ class AudioPlayerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        track = arguments?.getParcelable<Track>(SEARCH_QUERY_HISTORY)!!
+        track = arguments?.getParcelable<Track>(SEARCH_QUERY_HISTORY) as Track
 
         (activity as MainActivity).hideNavBar()
 

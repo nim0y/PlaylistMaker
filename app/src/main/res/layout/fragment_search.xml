@@ -154,7 +154,7 @@
         android:layout_marginTop="@dimen/top_margin"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/view_track"
-        tools:visibility="visible" />
+        tools:visibility="invisible" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_bar"

@@ -60,7 +60,7 @@ class FavoriteTracksFragment : Fragment() {
         with(favoriteAdapter) {
             tracksList.clear()
             tracksList.addAll(tracks)
-            notifyDataSetChanged()                       //*notifyItemRangeChanged(0, tracks.size) - cause crash ask mentor!
+            notifyItemRangeChanged(0, tracksList.size)
         }
     }
 

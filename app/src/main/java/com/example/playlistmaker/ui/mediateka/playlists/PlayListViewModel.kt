@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.mediateka
+package com.example.playlistmaker.ui.mediateka.playlists
 
 import androidx.lifecycle.ViewModel
 

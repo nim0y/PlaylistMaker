@@ -8,7 +8,7 @@ class PlayerRepositoryImpl(private val mediaPlayer: MediaPlayer) : PlayerReposit
 
     private var playerState = PlayerState.DEFAULT_STATE
 
-    override fun preparePlayer(previewUrl: String?) {
+    override fun preparePlayer(previewUrl: String) {
         mediaPlayer.apply {
             setDataSource(previewUrl)
         }

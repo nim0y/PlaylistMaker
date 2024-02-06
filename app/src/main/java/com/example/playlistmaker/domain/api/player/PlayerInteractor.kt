@@ -1,7 +1,7 @@
 package com.example.playlistmaker.domain.api.player
 
 interface PlayerInteractor {
-    fun preparePlayer(previewUrl: String?)
+    fun preparePlayer(previewUrl: String)
 
     fun playerCheck(): Boolean
 

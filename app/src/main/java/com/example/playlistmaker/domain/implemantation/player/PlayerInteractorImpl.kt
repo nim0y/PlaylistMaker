@@ -5,8 +5,9 @@ import com.example.playlistmaker.domain.api.player.PlayerRepository
 
 class PlayerInteractorImpl(private val playerRepository: PlayerRepository) : PlayerInteractor {
 
-    override fun preparePlayer(previewUrl: String?) {
+    override fun preparePlayer(previewUrl: String) {
         playerRepository.preparePlayer(previewUrl)
+        playerRepository.prepareAsync()
     }
 
     override fun playerCheck(): Boolean {
@@ -44,5 +45,4 @@ class PlayerInteractorImpl(private val playerRepository: PlayerRepository) : Pla
     override fun getCurrentPosition(): Int {
         return playerRepository.getCurrentPosition()
     }
-
 }

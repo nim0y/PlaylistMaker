@@ -12,3 +12,5 @@ const val TIMER_DELAY = 300L
 const val IS_DARK_APP_THEME_KEY = "shared_preferences_status"
 const val CLICK_DEBOUNCE = 1000L
 const val FRAGMENT_COUNT = 2
+const val FAVORITE_TRACKS_TABLET = "favorite_tracks_tablet"
+const val FAVORITE_DATABASE = "database.db"

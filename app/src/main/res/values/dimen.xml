@@ -23,4 +23,9 @@
     <dimen name="ap_text_padding">8dp</dimen>
     <dimen name="ap_text_size_13">13sp</dimen>
     <dimen name="track_corner_radious">8dp</dimen>
+    <dimen name="fav_layout_margin">106dp</dimen>
+    <dimen name="fv_media_empty_txt_margin">16dp</dimen>
+    <dimen name="fv_progress_bar_wid">44dp</dimen>
+    <dimen name="fv_progress_bar_hei">44dp</dimen>
+    <dimen name="fv_progress_bar_marg_top">140dp</dimen>
 </resources>

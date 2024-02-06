@@ -1,7 +1,6 @@
-package com.example.playlistmaker.ui.search.activity
+package com.example.playlistmaker.ui.search.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,9 +11,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.domain.models.search.Track
-import com.example.playlistmaker.ui.player.AudioPlayerActivity
 import com.example.playlistmaker.ui.search.SearchViewModel
 import com.example.playlistmaker.ui.search.State
 import com.example.playlistmaker.ui.search.TrackAdapter
@@ -139,9 +139,12 @@ class SearchFragment : Fragment() {
     }
 
     private fun openAudioPlayer(track: Track) {
-        val intent = Intent(requireContext(), AudioPlayerActivity::class.java)
-        intent.putExtra(SEARCH_QUERY_HISTORY, track)
-        startActivity(intent)
+        val bundle = Bundle()
+        bundle.putParcelable(SEARCH_QUERY_HISTORY, track)
+        findNavController().navigate(
+            R.id.action_searchFragment_to_audioPlayerFragment,
+            bundle
+        )
     }
 
     private fun clickDebounce(): Boolean {
@@ -163,7 +166,6 @@ class SearchFragment : Fragment() {
             is State.Error -> showNoConnection()
             is State.Load -> showProgressBar()
             is State.NothingFound -> showNothing()
-            else -> {}
         }
     }
 

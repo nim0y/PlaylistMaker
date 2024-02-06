@@ -3,12 +3,15 @@ package com.example.playlistmaker.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.MediaPlayer
+import androidx.room.Room
 import com.example.playlistmaker.data.NetworkClient
+import com.example.playlistmaker.data.db.AppDatabase
 import com.example.playlistmaker.data.impl.search.HistoryRepositoryImpl
 import com.example.playlistmaker.data.impl.settings.SettingsRepositoryImpl
 import com.example.playlistmaker.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.data.network.SearchApi
 import com.example.playlistmaker.domain.implemantation.settings.ExternalNavigatorInteractorImpl
+import com.example.playlistmaker.utils.FAVORITE_DATABASE
 import com.example.playlistmaker.utils.IS_DARK_APP_THEME_KEY
 import com.example.playlistmaker.utils.ITUNES_URL
 import com.example.playlistmaker.utils.PREFER_SEARCH
@@ -44,6 +47,12 @@ val dataModule = module {
 
     single<SharedPreferences> {
         androidContext().getSharedPreferences(IS_DARK_APP_THEME_KEY, Context.MODE_PRIVATE)
+    }
+
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, FAVORITE_DATABASE)
+            .fallbackToDestructiveMigration()
+            .build()
     }
     factory {
         SettingsRepositoryImpl(sharedPreferences = get())

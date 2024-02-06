@@ -2,7 +2,7 @@ package com.example.playlistmaker.domain.api.player
 
 interface PlayerRepository {
 
-    fun preparePlayer(previewUrl: String?)
+    fun preparePlayer(previewUrl: String)
 
     fun prepareAsync()
 

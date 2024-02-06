@@ -55,7 +55,7 @@ class AudioPlayerViewModel(
     fun isFavorite(track: Track) {
         viewModelScope.launch {
             favoriteTracksInteractor
-                .isFavoriteTrack(track.trackId!!)
+                .isFavoriteTrack(track.trackId ?: 0)
                 .collect { isFavorite ->
                     isFavoriteTrack = isFavorite
                     _favoriteState.postValue(FavoriteState(isFavorite))
@@ -67,7 +67,7 @@ class AudioPlayerViewModel(
     fun clickOnFavorite(track: Track) {
         viewModelScope.launch {
             if (isFavoriteTrack) {
-                favoriteTracksInteractor.deleteTrack(track.trackId!!)
+                favoriteTracksInteractor.deleteTrack(track.trackId ?: 0)
                 _favoriteState.postValue(FavoriteState(false))
                 isFavoriteTrack = false
             } else {

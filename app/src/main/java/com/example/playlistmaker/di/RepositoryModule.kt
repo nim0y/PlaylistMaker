@@ -1,7 +1,10 @@
 package com.example.playlistmaker.di
 
+import com.example.playlistmaker.data.db.converters.PlaylistsDbConverter
 import com.example.playlistmaker.data.db.converters.TrackDbConverter
+import com.example.playlistmaker.data.db.converters.TracksToPlaylistConverter
 import com.example.playlistmaker.data.impl.db.FavoriteTracksRepositoryImpl
+import com.example.playlistmaker.data.impl.db.PlaylistsRepositoryImpl
 import com.example.playlistmaker.data.impl.player.PlayerRepositoryImpl
 import com.example.playlistmaker.data.impl.search.HistoryRepositoryImpl
 import com.example.playlistmaker.data.impl.search.SearchRepositoryImpl
@@ -13,6 +16,7 @@ import com.example.playlistmaker.domain.api.search.SearchRepository
 import com.example.playlistmaker.domain.api.settings.ExternalNavigatorRepository
 import com.example.playlistmaker.domain.api.settings.SettingsRepository
 import com.example.playlistmaker.domain.db.FavoriteTracksRepository
+import com.example.playlistmaker.domain.db.PlaylistsRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -24,6 +28,10 @@ val repositoryModule = module {
     }
 
     factory { TrackDbConverter() }
+
+    factory { PlaylistsDbConverter() }
+
+    factory { TracksToPlaylistConverter() }
 
     single<FavoriteTracksRepository> {
         FavoriteTracksRepositoryImpl(appDatabase = get(), trackDbConverter = get())
@@ -37,6 +45,12 @@ val repositoryModule = module {
     }
     single<ExternalNavigatorRepository> {
         ExternalNavigatorRepositoryImpl(context = get())
+    }
+    single<PlaylistsRepository> {
+        PlaylistsRepositoryImpl(
+            appDatabasePlaylists = get(), playlistsDbConverter = get(),
+            tracksToPlaylistConverter = get()
+        )
     }
 
 }

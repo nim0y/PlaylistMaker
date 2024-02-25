@@ -25,4 +25,14 @@
     <string name="no_playlists">You have\n no playlists</string>
     <string name="favorite_tracks">Favorite tracks</string>
     <string name="playlists">Playlists</string>
+    <string name="playlist_add">Add to playlist</string>
+    <string name="added_to_playlist">Added to playlist</string>
+    <string name="already_in_playlist">Track already added to playlist</string>
+    <string name="new_playlist">New playlist</string>
+    <string name="track_multiplie">tracks</string>
+    <string name="track_several">tracks</string>
+    <string name="track_one">track</string>
+    <string name="description">Description</string>
+    <string name="playlist_title">Title*</string>
+    <string name="playlist_create">Create</string>
 </resources>

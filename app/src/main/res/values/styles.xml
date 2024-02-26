@@ -185,7 +185,6 @@
     </style>
 
     <style name="new_playlist_background">
-        <item name="android:background">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
     </style>
-
 </resources>

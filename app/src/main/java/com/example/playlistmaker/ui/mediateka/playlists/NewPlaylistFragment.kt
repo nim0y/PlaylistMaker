@@ -114,10 +114,10 @@ class NewPlaylistFragment : Fragment() {
             }
             .setPositiveButton(getString(R.string.dialog_positive_btn)) { dialog, witch ->
                 findNavController().navigateUp()
+                (activity as? MainActivity)?.showNavBar()
             }
             .show()
     }
-
     private fun newPlaylistAdd(coverUri: Uri?) {
         val playlistName = binding.newPlaylistNameEditTxt.text.toString()
         val playlistDescription = binding.newPlaylistDescriptionEditTxt.text.toString()

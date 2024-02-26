@@ -192,4 +192,5 @@
     <style name="new_playlist_background">
         <item name="android:backgroundTint">@color/background_main_dark</item>
     </style>
+
 </resources>

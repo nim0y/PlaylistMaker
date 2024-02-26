@@ -62,7 +62,7 @@ class PlayListFragment : Fragment(), PlaylistsViewHolder.ClickListener {
                 showData()
                 adapter.playlists = playlists as ArrayList<Playlist>
                 adapter.notifyDataSetChanged()
-                (activity as MainActivity).showNavBar()
+                (activity as? MainActivity)?.showNavBar()
             }
 
             is PlaylistState.Empty -> {
@@ -103,11 +103,5 @@ class PlayListFragment : Fragment(), PlaylistsViewHolder.ClickListener {
     }
 
     override fun onClick(playlist: Playlist) {
-//        val bundle = Bundle().apply {
-//            putParcelable("Put_Playlist",playlist)
-//        }
-//        findNavController().navigate() -future playlist +bundle
     }
 }
-
-

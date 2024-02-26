@@ -28,12 +28,7 @@ class AudioPlayerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun setTracksAmount(context: Context, count: Int): String {
-        val countTrack: String = when {
-            count % 100 in 11..19 -> context.getString(R.string.track_multiplie)
-            count % 10 == 1 -> context.getString(R.string.track_one)
-            count % 10 in 2..4 -> context.getString(R.string.track_several)
-            else -> context.getString(R.string.track_multiplie)
-        }
+        val countTrack = context.resources.getQuantityString(R.plurals.track_count, count)
         return "$count $countTrack"
     }
 

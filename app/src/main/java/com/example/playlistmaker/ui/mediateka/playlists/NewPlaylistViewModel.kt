@@ -7,12 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.domain.db.PlaylistsInteractor
-import com.example.playlistmaker.domain.models.search.Playlist
 import com.example.playlistmaker.domain.models.search.playlist.PlaylistState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 class NewPlaylistViewModel(private val playlistsInteractor: PlaylistsInteractor) : ViewModel() {
 
@@ -22,9 +20,9 @@ class NewPlaylistViewModel(private val playlistsInteractor: PlaylistsInteractor)
     private val _savedCoverUri = MutableLiveData<Uri?>()
     val savedCoverUri: LiveData<Uri?> = _savedCoverUri
 
-    fun addPlaylist(playlist: Playlist) {
+    fun newPlaylist(playlistName: String, playlistDescription: String, coverUri: Uri?) {
         viewModelScope.launch {
-            playlistsInteractor.addPlaylist(playlist)
+            playlistsInteractor.newPlaylist(playlistName, playlistDescription, coverUri)
         }
     }
 
@@ -34,9 +32,4 @@ class NewPlaylistViewModel(private val playlistsInteractor: PlaylistsInteractor)
             _savedCoverUri.postValue(savedUri)
         }
     }
-
-    fun getCover(): String {
-        return "cover_${UUID.randomUUID()}.jpg"
-    }
-
 }

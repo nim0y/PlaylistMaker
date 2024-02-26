@@ -1,7 +1,6 @@
 package com.example.playlistmaker.ui.mediateka.playlists
 
 import android.content.Context
-import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,7 +15,7 @@ class PlaylistsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(model: Playlist, clickListener: ClickListener) {
         binding.namePlaylist.text = model.name
         binding.descriptionPlaylist.text = setTracksAmount(itemView.context, model.tracksAmount)
-        val previewUri = model.imageUri.let { Uri.parse(it) }
+        val previewUri = model.imageUri
 
         Glide.with(itemView)
             .load(previewUri)
@@ -28,12 +27,7 @@ class PlaylistsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun setTracksAmount(context: Context, count: Int): String {
-        val countTrack: String = when {
-            count % 100 in 11..19 -> context.getString(R.string.track_multiplie)
-            count % 10 == 1 -> context.getString(R.string.track_one)
-            count % 10 in 2..4 -> context.getString(R.string.track_several)
-            else -> context.getString(R.string.track_multiplie)
-        }
+        val countTrack = context.resources.getQuantityString(R.plurals.track_count, count)
         return "$count $countTrack"
     }
 

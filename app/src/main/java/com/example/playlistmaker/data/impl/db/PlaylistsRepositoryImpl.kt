@@ -12,10 +12,15 @@ import com.example.playlistmaker.data.db.converters.TracksToPlaylistConverter
 import com.example.playlistmaker.domain.db.PlaylistsRepository
 import com.example.playlistmaker.domain.models.search.Playlist
 import com.example.playlistmaker.domain.models.search.Track
+import com.example.playlistmaker.utils.ILLEGAL_ARGUMENT_TRACK_ID
+import com.example.playlistmaker.utils.NULL_ARGUMENT_TRACK_ID
+import com.example.playlistmaker.utils.STORAGE_DIR_NAME
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Date
+import java.util.UUID
 
 class PlaylistsRepositoryImpl(
     private val appDatabasePlaylists: AppDatabasePlaylists,
@@ -32,14 +37,21 @@ class PlaylistsRepositoryImpl(
     }
 
     override suspend fun addTrackToPlaylist(playList: Playlist, track: Track) {
-        playList.tracksIds.add(track.trackId?.toLong() ?: 0)
+        val trackId = track.trackId?.toLong() ?: throw IllegalArgumentException(
+            ILLEGAL_ARGUMENT_TRACK_ID
+        )
+        if (trackId == 0L) {
+            throw IllegalArgumentException(NULL_ARGUMENT_TRACK_ID)
+        }
         addPlaylist(playlist = playList)
-        appDatabasePlaylists.playlistsDao().addTrackToPlaylist(tracksToPlaylistConverter.map(track))
+        val addTime = Date().time
+        appDatabasePlaylists.playlistsDao()
+            .addTrackToPlaylist(tracksToPlaylistConverter.map(track, addTime))
     }
 
     override suspend fun saveCoverToPrivateStorage(previewUri: Uri, context: Context): Uri? {
         val path =
-            File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "myPics")
+            File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), STORAGE_DIR_NAME)
         if (!path.exists()) {
             path.mkdirs()
         }
@@ -62,6 +74,28 @@ class PlaylistsRepositoryImpl(
     override suspend fun deletePlaylist(playlistId: Int) {
         val playlist = getPlaylistById(playlistId)
         appDatabasePlaylists.playlistsDao().deletePlaylist(playlistsDbConverter.map(playlist))
+    }
+
+    override suspend fun newPlaylist(
+        playlistName: String,
+        playlistDescription: String,
+        coverUri: Uri?
+    ) {
+        val coverPath = getCover()
+        val playlist = Playlist(
+            id = 0,
+            name = playlistName,
+            description = playlistDescription,
+            coverPath = coverPath,
+            tracksIds = arrayListOf(),
+            tracksAmount = 0,
+            imageUri = coverUri?.toString() ?: ""
+        )
+        addPlaylist(playlist)
+    }
+
+    override suspend fun getCover(): String {
+        return "cover_${UUID.randomUUID()}.jpg"
     }
 
     private fun converterForEntity(playlist: List<PlaylistEntity>): List<Playlist> {

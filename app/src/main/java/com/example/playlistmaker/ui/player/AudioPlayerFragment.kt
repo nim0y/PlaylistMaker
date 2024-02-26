@@ -126,7 +126,7 @@ class AudioPlayerFragment : Fragment(), AudioPlayerViewHolder.ClickListener {
 
         binding.toolbarplayer.setNavigationOnClickListener {
             findNavController().navigateUp()
-            (activity as MainActivity).showNavBar()
+            (activity as? MainActivity)?.showNavBar()
         }
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

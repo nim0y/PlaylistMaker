@@ -20,4 +20,8 @@ interface PlaylistsInteractor {
 
     suspend fun deletePlaylist(playlistId: Int)
 
+    suspend fun newPlaylist(playlistName: String, playlistDescription: String, coverUri: Uri?)
+
+    suspend fun getCover(): String
+
 }

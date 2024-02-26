@@ -179,4 +179,13 @@
         <item name="android:backgroundTint">@color/yandex_gray</item>
     </style>
 
+    <style name="new_playlist_image_shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="new_playlist_background">
+        <item name="android:background">@color/white</item>
+    </style>
+
 </resources>

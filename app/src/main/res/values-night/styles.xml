@@ -184,4 +184,13 @@
         <item name="android:backgroundTint">@color/white</item>
     </style>
 
+    <style name="new_playlist_image_shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="new_playlist_background">
+        <item name="android:background">@color/background_main_dark</item>
+    </style>
+
 </resources>

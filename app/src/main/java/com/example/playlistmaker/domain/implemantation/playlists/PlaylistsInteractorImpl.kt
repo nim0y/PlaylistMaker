@@ -34,5 +34,15 @@ class PlaylistsInteractorImpl(private val playlistsRepository: PlaylistsReposito
         return playlistsRepository.deletePlaylist(playlistId)
     }
 
+    override suspend fun newPlaylist(
+        playlistName: String,
+        playlistDescription: String,
+        coverUri: Uri?
+    ) {
+        return playlistsRepository.newPlaylist(playlistName, playlistDescription, coverUri)
+    }
 
+    override suspend fun getCover(): String {
+        return playlistsRepository.getCover()
+    }
 }

@@ -2,10 +2,9 @@ package com.example.playlistmaker.data.db.converters
 
 import com.example.playlistmaker.data.db.TrackToPlaylistEntity
 import com.example.playlistmaker.domain.models.search.Track
-import java.util.Date
 
 class TracksToPlaylistConverter {
-    fun map(track: Track): TrackToPlaylistEntity {
+    fun map(track: Track, addTime: Long): TrackToPlaylistEntity {
         return TrackToPlaylistEntity(
             track.trackId,
             track.trackName,
@@ -17,11 +16,11 @@ class TracksToPlaylistConverter {
             track.primaryGenreName,
             track.country,
             track.previewUrl,
-            Date().time
+            addTime
         )
     }
 
-    fun map(track: TrackToPlaylistEntity): Track {
+    fun map(track: TrackToPlaylistEntity, addTime: Long): Track {
         return Track(
             track.trackId,
             track.trackName,
@@ -33,7 +32,7 @@ class TracksToPlaylistConverter {
             track.primaryGenreName,
             track.country,
             track.previewUrl,
-            Date().time
+            addTime
         )
     }
 }

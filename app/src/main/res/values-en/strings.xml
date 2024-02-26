@@ -35,4 +35,8 @@
     <string name="description">Description</string>
     <string name="playlist_title">Title*</string>
     <string name="playlist_create">Create</string>
+    <string name="dialog_title">Do you wish to complete creating?</string>
+    <string name="dialog_message">All unsaved data will be deleted</string>
+    <string name="dialog_positive_btn">Complete</string>
+    <string name="dialog_negative_btn">Cancel</string>
 </resources>

@@ -107,7 +107,7 @@ class NewPlaylistFragment : Fragment() {
     }
 
     private fun showDialog() {
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.custom_alert_dialog_theme)
             .setTitle(getString(R.string.dialog_title))
             .setMessage(getString(R.string.dialog_message))
             .setNegativeButton(getString(R.string.dialog_negative_btn)) { dialog, wich ->

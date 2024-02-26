@@ -188,4 +188,33 @@
         <item name="android:backgroundTint">@color/white</item>
     </style>
 
+    <style name="custom_alert_dialog_theme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@color/white</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/custom_title_text_style</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/custom_dialog_body_text_style</item>
+        <item name="buttonBarPositiveButtonStyle">@style/pos_button_style</item>
+        <item name="buttonBarNegativeButtonStyle">@style/neg_button_style</item>
+    </style>
+
+    <style name="custom_title_text_style" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="custom_dialog_body_text_style" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="pos_button_style" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/background_main</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="neg_button_style" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/background_main</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
 </resources>

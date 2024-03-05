@@ -219,28 +219,31 @@
         <TextView
             android:id="@+id/share_menu_current_playlist"
             style="@style/origin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/border_padding"
-            android:layout_marginTop="@dimen/share_menu_margin_top"
+            android:paddingTop="@dimen/padding_menu_items_21dp"
+            android:paddingBottom="@dimen/padding_menu_items_21dp"
             android:text="@string/menu_share" />
 
         <TextView
             android:id="@+id/edit_menu_current_playlist"
             style="@style/origin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/border_padding"
-            android:layout_marginTop="@dimen/edit_menu_margin_top"
+            android:paddingTop="@dimen/padding_menu_items_21dp"
+            android:paddingBottom="@dimen/padding_menu_items_21dp"
             android:text="@string/menu_change" />
 
         <TextView
             android:id="@+id/delete_menu_current_playlist"
             style="@style/origin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/border_padding"
-            android:layout_marginTop="@dimen/delete_menu_margin_top"
+            android:paddingTop="@dimen/padding_menu_items_21dp"
+            android:paddingBottom="@dimen/padding_menu_items_21dp"
             android:text="@string/menu_delete" />
     </LinearLayout>
 

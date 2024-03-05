@@ -22,6 +22,5 @@ class AudioPlayerAdapter(private val clickListener: AudioPlayerViewHolder.ClickL
 
     override fun onBindViewHolder(holder: AudioPlayerViewHolder, position: Int) {
         holder.bind(playlists[position], clickListener)
-
     }
 }

@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
-import com.example.playlistmaker.data.db.AppDatabasePlaylists
+import com.example.playlistmaker.data.db.AppDatabase
 import com.example.playlistmaker.data.db.PlaylistEntity
 import com.example.playlistmaker.data.db.TrackToPlaylistEntity
 import com.example.playlistmaker.data.db.converters.PlaylistsDbConverter
@@ -24,21 +24,21 @@ import java.util.Date
 import java.util.UUID
 
 class PlaylistsRepositoryImpl(
-    private val appDatabasePlaylists: AppDatabasePlaylists,
+    private val appDatabase: AppDatabase,
     private val playlistsDbConverter: PlaylistsDbConverter,
     private val tracksToPlaylistConverter: TracksToPlaylistConverter
 ) : PlaylistsRepository {
     override suspend fun getPlaylists(): Flow<List<Playlist>> = flow {
-        val playlists = appDatabasePlaylists.playlistsDao().getAllPlayLists()
+        val playlists = appDatabase.playlistsDao().getAllPlayLists()
         emit(converterFromPlaylistEntity(playlists))
     }
 
     override suspend fun addPlaylist(playlist: Playlist) {
-        appDatabasePlaylists.playlistsDao().insertPlayList(playlistsDbConverter.map(playlist))
+        appDatabase.playlistsDao().insertPlayList(playlistsDbConverter.map(playlist))
     }
 
     override suspend fun updatePlaylist(playlist: Playlist) {
-        appDatabasePlaylists.playlistsDao().updatePlayList(playlistsDbConverter.map(playlist))
+        appDatabase.playlistsDao().updatePlayList(playlistsDbConverter.map(playlist))
     }
 
     override suspend fun addTrackToPlaylist(playList: Playlist, track: Track) {
@@ -51,7 +51,7 @@ class PlaylistsRepositoryImpl(
         playList.tracks.add(trackId)
         addPlaylist(playList)
         val addTime = Date().time
-        appDatabasePlaylists.playlistsDao()
+        appDatabase.playlistsDao()
             .addTrackToPlaylist(tracksToPlaylistConverter.map(track, addTime))
     }
 
@@ -73,19 +73,20 @@ class PlaylistsRepositoryImpl(
 
     override suspend fun getPlaylistById(playlistId: Int): Playlist {
         return converterForPlaylistEntity(
-            appDatabasePlaylists.playlistsDao().getPlaylistById(playlistId)
+            appDatabase.playlistsDao().getPlaylistById(playlistId)
         )
     }
 
     override suspend fun getAllTracks(tracksIdsList: List<Long>): List<Track> {
-        val playlist = appDatabasePlaylists.playlistsDao().getAllPlaylistTracks()
+        val playlist = appDatabase.playlistsDao().getAllPlaylistTracks()
         return playlist
             .filter { it.trackId?.toLong() in tracksIdsList }
+            .sortedByDescending { it.insertTime }
             .map { convertFromTrackEntity(it) }
     }
 
     override suspend fun trackCountDecrease(playlistId: Int) {
-        appDatabasePlaylists.playlistsDao().trackCountDecrease(playlistId)
+        appDatabase.playlistsDao().trackCountDecrease(playlistId)
     }
 
     override suspend fun deleteTrackFromPlaylist(playlistId: Int, trackId: Long) {
@@ -100,7 +101,7 @@ class PlaylistsRepositoryImpl(
 
     override suspend fun deletePlaylist(playlistId: Int) {
         val playlist = getPlaylistById(playlistId)
-        appDatabasePlaylists.playlistsDao().deletePlaylist(playlistsDbConverter.map(playlist))
+        appDatabase.playlistsDao().deletePlaylist(playlistsDbConverter.map(playlist))
     }
 
     override suspend fun newPlaylist(
@@ -161,7 +162,7 @@ class PlaylistsRepositoryImpl(
     }
 
     private fun checkTrackInAnyPLaylist(trackId: Long): Boolean {
-        val anyPlaylists = appDatabasePlaylists.playlistsDao().getAllPlayLists()
+        val anyPlaylists = appDatabase.playlistsDao().getAllPlayLists()
         for (playlist in anyPlaylists) {
             if (trackId in playlist.tracks) {
                 return true
@@ -171,7 +172,7 @@ class PlaylistsRepositoryImpl(
     }
 
     private suspend fun deleteTrackIfNoMatch(trackId: Long) {
-        appDatabasePlaylists.playlistsDao().deleteTrackById(trackId)
+        appDatabase.playlistsDao().deleteTrackById(trackId)
     }
 
 }

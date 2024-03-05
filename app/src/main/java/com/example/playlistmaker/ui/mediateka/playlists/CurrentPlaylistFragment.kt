@@ -76,7 +76,7 @@ class CurrentPlaylistFragment : Fragment() {
 
         bottomSheetBehaviorPlaylist.peekHeight = allowableHeight
 
-        binding.rvCurrentPlaylist.visibility = View.VISIBLE
+
         binding.bottomMenuCurrentPlaylist.visibility = View.VISIBLE
 
         bottomSheetBehavior.addBottomSheetCallback(object :
@@ -125,6 +125,7 @@ class CurrentPlaylistFragment : Fragment() {
         }
 
         binding.shareMenuCurrentPlaylist.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             toShare()
         }
 
@@ -170,6 +171,13 @@ class CurrentPlaylistFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if (playlist.tracksAmount == 0) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.no_tracks_in_playlist), Toast.LENGTH_SHORT
+            ).show()
+        }
+
         val playlistId = playlist.id
         vm.getPlaylistById(playlistId)
         vm.observePlaylistId().observe(viewLifecycleOwner) {
@@ -266,11 +274,7 @@ class CurrentPlaylistFragment : Fragment() {
 
     private fun showContent(tracks: List<Track>) {
         binding.rvCurrentPlaylist.visibility = View.VISIBLE
-        with(adapter) {
-            tracksList.clear()
-            tracksList.addAll(tracks)
-            notifyItemRangeChanged(0, tracks.size)
-        }
+        adapter.setTracks(tracks)
     }
 
     private fun openAudioPlayer(track: Track) {

@@ -2,6 +2,7 @@ package com.example.playlistmaker.ui.mediateka.playlists
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +21,9 @@ import com.example.playlistmaker.ui.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewPlaylistFragment : Fragment() {
+open class NewPlaylistFragment : Fragment() {
     private var _binding: FragmentCreatePlaylistBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
     private var coverUriSelect: Uri? = null
     private var showedDialog: Boolean = false
     private val vm by viewModel<NewPlaylistViewModel>()
@@ -53,6 +54,7 @@ class NewPlaylistFragment : Fragment() {
                     binding.newPlaylistCover.setImageURI(previewUri)
                     showedDialog = true
                 } else {
+                    Log.d("PlaylistCover", "User did not select an image")
                 }
             }
 
@@ -64,7 +66,7 @@ class NewPlaylistFragment : Fragment() {
             newPlaylistAdd(coverUriSelect)
             Toast.makeText(
                 requireContext(),
-                "Playlist Created",
+                "Playlist ${binding.newPlaylistNameEditTxt.text.toString()} created",
                 Toast.LENGTH_SHORT
             ).show()
             findNavController().navigateUp()

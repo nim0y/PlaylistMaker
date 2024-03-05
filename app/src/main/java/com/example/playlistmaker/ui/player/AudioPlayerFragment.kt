@@ -230,7 +230,7 @@ class AudioPlayerFragment : Fragment(), AudioPlayerViewHolder.ClickListener {
                 Toast.LENGTH_SHORT
             )
                 .show()
-            playlist.tracksAmount = playlist.tracksIds.size
+            playlist.tracksAmount = playlist.tracks.size
             BottomSheetBehavior.from(binding.bottomSheetAudioPlayer).apply {
                 state = BottomSheetBehavior.STATE_HIDDEN
             }

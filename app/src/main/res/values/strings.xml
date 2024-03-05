@@ -49,5 +49,15 @@
     <string name="dialog_message">Все несохраненные данные будут потеряны</string>
     <string name="dialog_positive_btn">Завершить</string>
     <string name="dialog_negative_btn">Отмена</string>
+    <string name="edit_modify">Редактировать</string>
+    <string name="save_modify">Сохранить</string>
+    <string name="delete_playlist_dialog">Хотите удалить плейлист?</string>
+    <string name="answer_no">Нет</string>
+    <string name="answer_yes">ДА</string>
+    <string name="on_tracks_to_share">В этом плейлисте нет списка треков, которым можно поделиться</string>
+    <string name="delete_track_dialog">Хотите удалить трек?</string>
+    <string name="menu_share">Поделиться</string>
+    <string name="menu_change">Изменить</string>
+    <string name="menu_delete">Удалить</string>
 
 </resources>

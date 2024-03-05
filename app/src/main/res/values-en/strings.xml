@@ -39,4 +39,14 @@
     <string name="dialog_message">All unsaved data will be deleted</string>
     <string name="dialog_positive_btn">Complete</string>
     <string name="dialog_negative_btn">Cancel</string>
+    <string name="edit_modify">Edit</string>
+    <string name="save_modify">Save</string>
+    <string name="delete_playlist_dialog">Do you want to delete playlist?</string>
+    <string name="answer_no">No</string>
+    <string name="answer_yes">Yes</string>
+    <string name="on_tracks_to_share">There is no tracks in this playlist, that you can share.</string>
+    <string name="delete_track_dialog">You want to delete track?</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_change">Edit</string>
+    <string name="menu_delete">Delete</string>
 </resources>

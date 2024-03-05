@@ -28,4 +28,16 @@
     <dimen name="fv_progress_bar_wid">44dp</dimen>
     <dimen name="fv_progress_bar_hei">44dp</dimen>
     <dimen name="fv_progress_bar_marg_top">140dp</dimen>
+    <dimen name="toolbar_height">48dp</dimen>
+    <dimen name="no_dp">0dp</dimen>
+    <dimen name="title_top_margin">24dp</dimen>
+    <dimen name="bottom_line_width">50dp</dimen>
+    <dimen name="bottom_line_height">4dp</dimen>
+    <dimen name="bottom_line_margin_top">10dp</dimen>
+    <dimen name="ap_margin_13">13dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="title_bottom_margin_top">6dp</dimen>
+    <dimen name="share_menu_margin_top">29dp</dimen>
+    <dimen name="edit_menu_margin_top">42dp</dimen>
+    <dimen name="delete_menu_margin_top">42dp</dimen>
 </resources>

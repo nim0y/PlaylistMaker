@@ -76,9 +76,6 @@ class CurrentPlaylistFragment : Fragment() {
 
         bottomSheetBehaviorPlaylist.peekHeight = allowableHeight
 
-
-        binding.bottomMenuCurrentPlaylist.visibility = View.VISIBLE
-
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -172,10 +169,9 @@ class CurrentPlaylistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (playlist.tracksAmount == 0) {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.no_tracks_in_playlist), Toast.LENGTH_SHORT
-            ).show()
+            binding.noTracksInPlaylist.visibility = View.VISIBLE
+        } else {
+            binding.noTracksInPlaylist.visibility = View.GONE
         }
 
         val playlistId = playlist.id

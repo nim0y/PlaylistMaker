@@ -40,4 +40,6 @@
     <dimen name="share_menu_margin_top">29dp</dimen>
     <dimen name="edit_menu_margin_top">42dp</dimen>
     <dimen name="delete_menu_margin_top">42dp</dimen>
+    <dimen name="padding_menu_items_21dp">21dp</dimen>
+    <dimen name="no_tracks_in_playlist_paddingtop_30dp">30dp</dimen>
 </resources>

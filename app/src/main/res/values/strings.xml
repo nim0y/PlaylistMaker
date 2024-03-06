@@ -59,6 +59,6 @@
     <string name="menu_share">Поделиться</string>
     <string name="menu_change">Изменить</string>
     <string name="menu_delete">Удалить</string>
-    <string name="no_tracks_in_playlist">В этом плейлисте нет треков</string>
+    <string name="no_tracks_in_playlist">В плейлист еще не добавлен\n ни один трек</string>
 
 </resources>

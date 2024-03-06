@@ -132,6 +132,16 @@
             android:layout_marginTop="@dimen/bottom_line_margin_top"
             android:background="@drawable/bottom_sheet_line" />
 
+        <TextView
+            android:id="@+id/no_tracks_in_playlist"
+            style="@style/no_tracks_in_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/no_tracks_in_playlist_paddingtop_30dp"
+            android:text="@string/no_tracks_in_playlist"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_current_playlist"
             android:layout_width="match_parent"

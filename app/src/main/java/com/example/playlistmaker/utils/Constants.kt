@@ -14,7 +14,6 @@ const val CLICK_DEBOUNCE = 1000L
 const val FRAGMENT_COUNT = 2
 const val FAVORITE_TRACKS_TABLET = "favorite_tracks_tablet"
 const val FAVORITE_DATABASE = "database.db"
-const val PLALISTS_DATABASE = "playlistsDatabase.db"
 const val PLAYLISTS_TABLET = "playlists_tablet"
 const val TRACKS_IN_PLAYLIST = "tracks_in_playlist"
 const val STORAGE_DIR_NAME = "myPics"

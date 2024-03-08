@@ -76,7 +76,7 @@ class AudioPlayerViewModel(
 
     fun inPlaylist(playlist: Playlist, trackId: Long): Boolean {
         var data = false
-        for (track in playlist.tracksIds) {
+        for (track in playlist.tracks) {
             if (track == trackId) data = true
         }
         return data
@@ -84,7 +84,7 @@ class AudioPlayerViewModel(
 
     fun clickOnAddtoPlaylist(playlist: Playlist, track: Track) {
         viewModelScope.launch {
-            playlist.tracksAmount = playlist.tracksIds.size + 1
+            playlist.tracksAmount = playlist.tracks.size + 1
             playlistsInteractor.addTrackToPlaylist(playlist, track)
         }
     }

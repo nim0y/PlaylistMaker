@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="track_count">
+        <item quantity="one"> track</item>
+        <item quantity="few"> tracks</item>
+        <item quantity="many"> tracks</item>
+        <item quantity="other"> tracks</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+</resources>

@@ -91,7 +91,7 @@ class AudioPlayerViewModel(
 
     fun getPlaylists() {
         viewModelScope.launch(Dispatchers.IO) {
-            playlistsInteractor.getPlaylists().collect() { playlists ->
+            playlistsInteractor.getPlaylists().collect { playlists ->
                 if (playlists.isEmpty()) {
                     _playlistsState.value = PlaylistState.Empty
                 } else {
@@ -103,14 +103,14 @@ class AudioPlayerViewModel(
 
     fun clickOnFavorite(track: Track) {
         viewModelScope.launch {
-            if (isFavoriteTrack) {
+            isFavoriteTrack = if (isFavoriteTrack) {
                 favoriteTracksInteractor.deleteTrack(track.trackId ?: 0)
                 _favoriteState.postValue(FavoriteState(false))
-                isFavoriteTrack = false
+                false
             } else {
                 favoriteTracksInteractor.insertTrack(track)
                 _favoriteState.postValue(FavoriteState(true))
-                isFavoriteTrack = true
+                true
             }
         }
     }

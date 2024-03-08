@@ -16,8 +16,10 @@ import com.example.playlistmaker.domain.models.search.Track
 import com.example.playlistmaker.utils.ILLEGAL_ARGUMENT_TRACK_ID
 import com.example.playlistmaker.utils.NULL_ARGUMENT_TRACK_ID
 import com.example.playlistmaker.utils.STORAGE_DIR_NAME
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Date
@@ -63,12 +65,13 @@ class PlaylistsRepositoryImpl(
         }
         val file = File(path, "playlist_cover_${System.currentTimeMillis()}.jpg")
         val input = context.contentResolver.openInputStream(previewUri)
-        val output = FileOutputStream(file)
+        val output = withContext(Dispatchers.IO) {
+            FileOutputStream(file)
+        }
         BitmapFactory
             .decodeStream(input)
             .compress(Bitmap.CompressFormat.JPEG, 30, output)
-        val previewUri = Uri.fromFile(file)
-        return previewUri
+        return Uri.fromFile(file)
     }
 
     override suspend fun getPlaylistById(playlistId: Int): Playlist {

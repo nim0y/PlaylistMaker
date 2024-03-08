@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.search.Playlist
@@ -48,7 +47,7 @@ class ModifyPlaylistFragment : NewPlaylistFragment() {
             findNavController().navigateUp()
         }
 
-        vm.savedCoverUri.observe(viewLifecycleOwner, Observer { uri ->
+        vm.savedCoverUri.observe(viewLifecycleOwner, { uri ->
             coverUriSelect = uri
         })
 

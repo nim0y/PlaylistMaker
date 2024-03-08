@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.search.Track
 
-class TrackAdapter() : RecyclerView.Adapter<TrackViewHolder>() {
+class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>() {
 
     var tracksList: ArrayList<Track> = ArrayList()
     lateinit var itemClickListener: ((Track) -> Unit)

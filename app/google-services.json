@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "884061575944",
+    "project_id": "playlistmakeranalityctest",
+    "storage_bucket": "playlistmakeranalityctest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884061575944:android:0c484f4bcd2f99d4e76abd",
+        "android_client_info": {
+          "package_name": "com.example.playlistmaker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC41H886YJgRoSvDF0dl5wCRgsSfoUNLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884061575944:android:07c5977fbdb97cf1e76abd",
+        "android_client_info": {
+          "package_name": "com.example.playlistmaker.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC41H886YJgRoSvDF0dl5wCRgsSfoUNLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

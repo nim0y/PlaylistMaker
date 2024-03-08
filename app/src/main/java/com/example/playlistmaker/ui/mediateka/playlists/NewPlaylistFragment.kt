@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentCreatePlaylistBinding
@@ -43,7 +42,7 @@ open class NewPlaylistFragment : Fragment() {
 
         (activity as? MainActivity)?.hideNavBar()
 
-        vm.savedCoverUri.observe(viewLifecycleOwner, Observer { savedUri ->
+        vm.savedCoverUri.observe(viewLifecycleOwner, { savedUri ->
             coverUriSelect = savedUri
         })
 

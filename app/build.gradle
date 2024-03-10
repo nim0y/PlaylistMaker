@@ -28,8 +28,7 @@ android {
         }
 
         debug {
-            minifyEnabled false
-            applicationIdSuffix = ".debug"
+
         }
     }
     compileOptions {

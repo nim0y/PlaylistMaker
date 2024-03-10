@@ -47,9 +47,9 @@ class ModifyPlaylistFragment : NewPlaylistFragment() {
             findNavController().navigateUp()
         }
 
-        vm.savedCoverUri.observe(viewLifecycleOwner, { uri ->
+        vm.savedCoverUri.observe(viewLifecycleOwner) { uri ->
             coverUriSelect = uri
-        })
+        }
 
         vm.playlist.observe(viewLifecycleOwner) { playlist ->
             vm.getPlaylist(playlist)

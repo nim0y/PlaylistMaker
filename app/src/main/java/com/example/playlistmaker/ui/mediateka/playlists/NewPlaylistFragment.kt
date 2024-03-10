@@ -42,9 +42,9 @@ open class NewPlaylistFragment : Fragment() {
 
         (activity as? MainActivity)?.hideNavBar()
 
-        vm.savedCoverUri.observe(viewLifecycleOwner, { savedUri ->
+        vm.savedCoverUri.observe(viewLifecycleOwner) { savedUri ->
             coverUriSelect = savedUri
-        })
+        }
 
         val chooseCover =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { previewUri ->

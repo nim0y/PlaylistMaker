@@ -41,15 +41,12 @@ class SearchViewModel(
 
     fun queryDebounce(queryNew: String) {
         lastQuery = queryNew
-        if (queryNew.isNullOrEmpty()) {
+        if (queryNew.isEmpty()) {
             setState(State.SomeHistory(historyInteractor.read()))
         } else {
             debounceTrack(queryNew)
         }
 
-    }
-
-    fun onDestroyHandlerRemove() {
     }
 
     fun addTracktoHistoryInvisible(track: Track) {

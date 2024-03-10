@@ -6,7 +6,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class Debounce {
-    private var job: Job? = null
+//    private var job: Job? = null
     fun <T> debounce(
         delayMillis: Long,
         coroutineScope: CoroutineScope,
@@ -25,9 +25,5 @@ class Debounce {
                 }
             }
         }
-    }
-
-    fun cancel() {
-        job?.cancel()
     }
 }

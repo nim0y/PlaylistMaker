@@ -24,6 +24,7 @@ import com.example.playlistmaker.domain.models.search.playlist.PlaylistState
 import com.example.playlistmaker.ui.MainActivity
 import com.example.playlistmaker.utils.SEARCH_QUERY_HISTORY
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -116,6 +117,12 @@ class AudioPlayerFragment : Fragment(), AudioPlayerViewHolder.ClickListener {
 
         binding.buttonLike.setOnClickListener {
             vm.clickOnFavorite(track)
+
+            val firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+            val params = Bundle()
+            params.putString("track_name", track.trackName)
+            params.putString("artist_name", track.artistName)
+            firebaseAnalytics.logEvent("add_to_favorite", params)
         }
 
         binding.buttonPlay.setOnClickListener {

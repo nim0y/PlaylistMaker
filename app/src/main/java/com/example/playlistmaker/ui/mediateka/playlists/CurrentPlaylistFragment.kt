@@ -60,6 +60,9 @@ class CurrentPlaylistFragment : Fragment() {
 
         binding.rvCurrentPlaylist.adapter = adapter
 
+        binding.bottomMenuCurrentPlaylist.visibility = View.VISIBLE
+
+
         renderCurrentPlaylist()
 
         val playlistId = playlist.id

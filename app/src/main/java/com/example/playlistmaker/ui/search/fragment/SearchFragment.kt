@@ -91,7 +91,7 @@ class SearchFragment : Fragment() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 binding.clearIcon.visibility = clearButtonVisibility(p0)
                 binding.searchHistoryLayout.visibility =
-                    if (binding.editQuery.hasFocus() == true && p0?.isEmpty() == true) {
+                    if (binding.editQuery.hasFocus() && p0?.isEmpty() == true) {
                         View.VISIBLE
                     } else {
                         View.GONE
@@ -206,7 +206,7 @@ class SearchFragment : Fragment() {
     private fun showHistory(historyList: List<Track>) {
         if (historyList.isEmpty()) {
             binding.searchHistoryLayout.isVisible = false
-        } else if (binding.editQuery.hasFocus() == true) {
+        } else if (binding.editQuery.hasFocus()) {
             binding.noConnectionErrorLayout.isVisible = false
             binding.nothingFoundCaseLayout.isVisible = false
             binding.searchHistoryLayout.isVisible = true
@@ -232,10 +232,5 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         isClickAllowed = true
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        vm.onDestroyHandlerRemove()
     }
 }
